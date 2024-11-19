@@ -1,0 +1,42 @@
+[gd_scene load_steps=3 format=3 uid="uid://cq3mp6s63imeu"]
+
+[ext_resource type="FontFile" uid="uid://b4qtwint4cvqk" path="res://assets/fonts/TmonMonsori.ttf.ttf" id="1_sqy2h"]
+[ext_resource type="Script" path="res://end_screen.gd" id="1_x0egx"]
+
+[node name="EndScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_x0egx")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+color = Color(0, 0, 0, 0.196078)
+
+[node name="RestartButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 480.0
+offset_top = 408.0
+offset_right = 677.0
+offset_bottom = 466.0
+theme_override_fonts/font = ExtResource("1_sqy2h")
+theme_override_font_sizes/font_size = 40
+text = "RESTART"
+
+[node name="ExitButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 480.0
+offset_top = 496.0
+offset_right = 677.0
+offset_bottom = 554.0
+theme_override_fonts/font = ExtResource("1_sqy2h")
+theme_override_font_sizes/font_size = 40
+text = "EXIT"
+
+[connection signal="pressed" from="RestartButton" to="." method="_on_restart_button_pressed"]
+[connection signal="pressed" from="ExitButton" to="." method="_on_exit_button_pressed"]

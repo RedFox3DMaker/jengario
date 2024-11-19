@@ -1,0 +1,33 @@
+[gd_scene load_steps=4 format=3 uid="uid://vuykbibxj1dj"]
+
+[ext_resource type="Texture2D" uid="uid://bvfqqq3fdumrm" path="res://assets/ux/game_jam_3_start_smaller.jpg" id="1_1wa33"]
+[ext_resource type="Script" path="res://start_screen.gd" id="1_q6itl"]
+[ext_resource type="FontFile" uid="uid://b4qtwint4cvqk" path="res://assets/fonts/TmonMonsori.ttf.ttf" id="2_5lymr"]
+
+[node name="StartScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_q6itl")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 0
+offset_top = -336.0
+offset_right = 1152.0
+offset_bottom = 732.0
+texture = ExtResource("1_1wa33")
+
+[node name="StartButton" type="Button" parent="."]
+layout_mode = 1
+offset_left = 488.0
+offset_top = 448.0
+offset_right = 663.0
+offset_bottom = 519.0
+theme_override_fonts/font = ExtResource("2_5lymr")
+theme_override_font_sizes/font_size = 40
+text = "START"
+
+[connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]
