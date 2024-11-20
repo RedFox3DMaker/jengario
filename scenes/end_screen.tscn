@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://cq3mp6s63imeu"]
 
 [ext_resource type="FontFile" uid="uid://b4qtwint4cvqk" path="res://assets/fonts/TmonMonsori.ttf.ttf" id="1_sqy2h"]
-[ext_resource type="Script" path="res://end_screen.gd" id="1_x0egx"]
+[ext_resource type="Script" path="res://scripts/end_screen.gd" id="1_x0egx"]
 
 [node name="EndScreen" type="Control"]
 layout_mode = 3

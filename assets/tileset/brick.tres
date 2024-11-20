@@ -1,0 +1,7 @@
+[gd_resource type="AtlasTexture" load_steps=2 format=3 uid="uid://cvswdpff8fgvw"]
+
+[ext_resource type="Texture2D" uid="uid://ckjsjfjf58a3x" path="res://assets/sprites/game_jam_3_block.png" id="1_o2pql"]
+
+[resource]
+atlas = ExtResource("1_o2pql")
+region = Rect2(0, 0, 163, 114)

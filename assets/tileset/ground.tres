@@ -1,0 +1,16 @@
+[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://cjusyh70223hq"]
+
+[ext_resource type="Texture2D" uid="uid://cfxwohelojtq4" path="res://assets/sprites/game_jam_tile_1.png" id="1_tmri6"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_52lcc"]
+resource_name = "ground"
+texture = ExtResource("1_tmri6")
+texture_region_size = Vector2i(96, 96)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-48, -48, 48, -48, 48, 48, -48, 48)
+
+[resource]
+tile_size = Vector2i(96, 96)
+uv_clipping = true
+physics_layer_0/collision_layer = 1
+sources/0 = SubResource("TileSetAtlasSource_52lcc")
