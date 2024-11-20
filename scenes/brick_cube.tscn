@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://bi44suh6qd1sp"]
+
+[ext_resource type="PackedScene" uid="uid://8c2a27bb0lyd" path="res://scenes/brick.tscn" id="1_70f8h"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ify55"]
+size = Vector2(47, 46)
+
+[node name="Brick" instance=ExtResource("1_70f8h")]
+
+[node name="Sprite2D" parent="." index="0"]
+region_rect = Rect2(68, 13, 48, 46)
+
+[node name="CollisionShape2D" parent="." index="1"]
+shape = SubResource("RectangleShape2D_ify55")

@@ -1,0 +1,7 @@
+[gd_resource type="AtlasTexture" load_steps=2 format=3 uid="uid://dxeb7ce0ur2w0"]
+
+[ext_resource type="Texture2D" uid="uid://cbglpmp8g760g" path="res://assets/sprites/game_jam_3-2_player_turn_id.png" id="1_hl38l"]
+
+[resource]
+atlas = ExtResource("1_hl38l")
+region = Rect2(83, 294, 172, 184)

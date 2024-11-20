@@ -1,0 +1,45 @@
+[gd_scene load_steps=7 format=3 uid="uid://vv1rkm5i2mhv"]
+
+[ext_resource type="Texture2D" uid="uid://cli3knmkschc2" path="res://assets/sprites/gamejam_halloween_char.png" id="1_b2frq"]
+[ext_resource type="Texture2D" uid="uid://dxeb7ce0ur2w0" path="res://assets/tileset/player_indicators.tres" id="2_m30i2"]
+[ext_resource type="FontFile" uid="uid://b4qtwint4cvqk" path="res://assets/fonts/TmonMonsori.ttf.ttf" id="2_temqy"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1npiq"]
+atlas = ExtResource("1_b2frq")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lxpu4"]
+size = Vector2(41, 45)
+
+[sub_resource type="LabelSettings" id="LabelSettings_5xlwo"]
+font = ExtResource("2_temqy")
+font_color = Color(1, 0.286275, 0.27451, 1)
+
+[node name="Player" type="Area2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_1npiq")
+hframes = 3
+vframes = 6
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-2.5, 2.5)
+shape = SubResource("RectangleShape2D_lxpu4")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[node name="PlayerIndicator" type="TextureRect" parent="."]
+offset_left = -11.0
+offset_top = -42.0
+offset_right = 835.0
+offset_bottom = 461.0
+scale = Vector2(0.0174788, 0.0329214)
+texture = ExtResource("2_m30i2")
+
+[node name="PlayerLabel" type="Label" parent="."]
+offset_left = -21.0
+offset_top = -65.0
+offset_right = 19.0
+offset_bottom = -42.0
+text = "1P"
+label_settings = SubResource("LabelSettings_5xlwo")
+horizontal_alignment = 1
