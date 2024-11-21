@@ -1,16 +1,22 @@
-[gd_scene load_steps=3 format=3 uid="uid://8c2a27bb0lyd"]
+[gd_scene load_steps=4 format=3 uid="uid://8c2a27bb0lyd"]
 
 [ext_resource type="Texture2D" uid="uid://cvswdpff8fgvw" path="res://assets/tileset/brick.tres" id="1_k8yqb"]
+[ext_resource type="Script" path="res://scripts/brick.gd" id="1_yqdgc"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1neom"]
-size = Vector2(139, 40)
+size = Vector2(47, 46)
 
 [node name="Brick" type="RigidBody2D"]
+input_pickable = true
+mass = 10.0
+freeze_mode = 1
+linear_damp = 0.1
+script = ExtResource("1_yqdgc")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_k8yqb")
 region_enabled = true
-region_rect = Rect2(9, 61, 139, 40)
+region_rect = Rect2(9, 13, 47, 46)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_1neom")
