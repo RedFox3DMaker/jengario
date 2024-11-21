@@ -1,10 +1,8 @@
-[gd_scene load_steps=7 format=4 uid="uid://dbhae44gmn1qh"]
+[gd_scene load_steps=5 format=4 uid="uid://dbhae44gmn1qh"]
 
 [ext_resource type="Texture2D" uid="uid://mmaknu8xpkof" path="res://assets/ux/level_background.png" id="1_k4oli"]
 [ext_resource type="TileSet" uid="uid://cjusyh70223hq" path="res://assets/tileset/ground.tres" id="2_a7qj7"]
-[ext_resource type="PackedScene" uid="uid://ewoffflka1k2" path="res://scenes/brick_cube_dot.tscn" id="3_2jlfo"]
 [ext_resource type="PackedScene" uid="uid://8c2a27bb0lyd" path="res://scenes/brick.tscn" id="3_vipfn"]
-[ext_resource type="PackedScene" uid="uid://bi44suh6qd1sp" path="res://scenes/brick_cube.tscn" id="4_nd0un"]
 [ext_resource type="PackedScene" uid="uid://vv1rkm5i2mhv" path="res://scenes/player.tscn" id="6_hjt0i"]
 
 [node name="Level" type="Node2D"]
@@ -20,41 +18,47 @@ tile_set = ExtResource("2_a7qj7")
 
 [node name="BrickTower" type="CanvasGroup" parent="."]
 
-[node name="Brick00" parent="BrickTower" instance=ExtResource("3_2jlfo")]
-position = Vector2(528, 552)
-
-[node name="Brick01" parent="BrickTower" instance=ExtResource("4_nd0un")]
-position = Vector2(574, 552)
-
-[node name="Brick02" parent="BrickTower" instance=ExtResource("3_2jlfo")]
-position = Vector2(620, 552)
-
-[node name="Brick10" parent="BrickTower" instance=ExtResource("3_vipfn")]
-position = Vector2(574, 509)
-
-[node name="Brick20" parent="BrickTower" instance=ExtResource("4_nd0un")]
-position = Vector2(528, 465)
-
-[node name="Brick21" parent="BrickTower" instance=ExtResource("3_2jlfo")]
-position = Vector2(574, 465)
-
-[node name="Brick22" parent="BrickTower" instance=ExtResource("4_nd0un")]
-position = Vector2(620, 465)
-
-[node name="Brick30" parent="BrickTower" instance=ExtResource("3_vipfn")]
-position = Vector2(574, 422)
-
-[node name="Brick40" parent="BrickTower" instance=ExtResource("3_2jlfo")]
-position = Vector2(528, 379)
-
-[node name="Brick41" parent="BrickTower" instance=ExtResource("4_nd0un")]
-position = Vector2(574, 379)
-
-[node name="Brick42" parent="BrickTower" instance=ExtResource("3_2jlfo")]
-position = Vector2(620, 379)
-
-[node name="Brick50" parent="BrickTower" instance=ExtResource("3_vipfn")]
-position = Vector2(574, 336)
-
 [node name="Player" parent="." instance=ExtResource("6_hjt0i")]
 position = Vector2(364, 551)
+
+[node name="Brick00" parent="." instance=ExtResource("3_vipfn")]
+position = Vector2(494, 552)
+
+[node name="Brick01" parent="." instance=ExtResource("3_vipfn")]
+position = Vector2(542, 552)
+variant = 1
+
+[node name="Brick02" parent="." instance=ExtResource("3_vipfn")]
+position = Vector2(590, 552)
+
+[node name="Brick10" parent="." instance=ExtResource("3_vipfn")]
+position = Vector2(542, 506)
+variant = 2
+
+[node name="Brick21" parent="." instance=ExtResource("3_vipfn")]
+position = Vector2(494, 460)
+
+[node name="Brick22" parent="." instance=ExtResource("3_vipfn")]
+position = Vector2(542, 460)
+variant = 1
+
+[node name="Brick23" parent="." instance=ExtResource("3_vipfn")]
+position = Vector2(590, 460)
+
+[node name="Brick30" parent="." instance=ExtResource("3_vipfn")]
+position = Vector2(542, 414)
+variant = 2
+
+[node name="Brick41" parent="." instance=ExtResource("3_vipfn")]
+position = Vector2(494, 368)
+
+[node name="Brick42" parent="." instance=ExtResource("3_vipfn")]
+position = Vector2(542, 368)
+variant = 1
+
+[node name="Brick43" parent="." instance=ExtResource("3_vipfn")]
+position = Vector2(590, 368)
+
+[node name="Brick50" parent="." instance=ExtResource("3_vipfn")]
+position = Vector2(542, 322)
+variant = 2
