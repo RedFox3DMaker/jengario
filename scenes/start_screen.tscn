@@ -1,8 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://vuykbibxj1dj"]
+[gd_scene load_steps=6 format=3 uid="uid://vuykbibxj1dj"]
 
-[ext_resource type="Texture2D" uid="uid://bvfqqq3fdumrm" path="res://assets/ux/game_jam_3_start_smaller.jpg" id="1_1wa33"]
 [ext_resource type="Script" path="res://scripts/start_screen.gd" id="1_q6itl"]
 [ext_resource type="FontFile" uid="uid://b4qtwint4cvqk" path="res://assets/fonts/TmonMonsori.ttf.ttf" id="2_5lymr"]
+[ext_resource type="Texture2D" uid="uid://cb1fgx2d2c4tv" path="res://assets/ux/game_jam_4_start_smaller.png" id="2_bwrbq"]
+[ext_resource type="FontFile" uid="uid://jpp5u1lmawf1" path="res://assets/fonts/Adventure.otf" id="4_qi3a6"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_k2vx7"]
+font = ExtResource("4_qi3a6")
+font_size = 70
+font_color = Color(0.104226, 0.204056, 0.201138, 0.85098)
 
 [node name="StartScreen" type="Control"]
 layout_mode = 3
@@ -18,7 +24,7 @@ layout_mode = 0
 offset_top = -336.0
 offset_right = 1152.0
 offset_bottom = 732.0
-texture = ExtResource("1_1wa33")
+texture = ExtResource("2_bwrbq")
 
 [node name="StartButton" type="Button" parent="."]
 layout_mode = 1
@@ -29,5 +35,14 @@ offset_bottom = 519.0
 theme_override_fonts/font = ExtResource("2_5lymr")
 theme_override_font_sizes/font_size = 40
 text = "START"
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 0
+offset_left = 440.0
+offset_top = 240.0
+offset_right = 711.0
+offset_bottom = 330.0
+text = "JengaRio"
+label_settings = SubResource("LabelSettings_k2vx7")
 
 [connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]
