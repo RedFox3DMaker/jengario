@@ -22,9 +22,3 @@ region_rect = Rect2(9, 13, 47, 46)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_nfsy6")
-
-[node name="RayCast2DDownLeft" type="RayCast2D" parent="."]
-position = Vector2(-23, 0)
-
-[node name="RayCast2DDownRight" type="RayCast2D" parent="."]
-position = Vector2(23, 0)

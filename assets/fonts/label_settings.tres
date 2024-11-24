@@ -1,0 +1,8 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://kd1owykpsloi"]
+
+[ext_resource type="FontFile" uid="uid://jpp5u1lmawf1" path="res://assets/fonts/Adventure.otf" id="1_46f2c"]
+
+[resource]
+font = ExtResource("1_46f2c")
+font_size = 70
+font_color = Color(0.104226, 0.204056, 0.201138, 0.85098)

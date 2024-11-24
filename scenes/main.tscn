@@ -7,15 +7,17 @@
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_5v4ly")
-
-[node name="StartScreen" parent="." instance=ExtResource("1_mtn5j")]
-
-[node name="EndScreen" parent="." instance=ExtResource("2_w5u0b")]
-visible = false
+level_scene = ExtResource("3_q73ux")
 
 [node name="Level" parent="." instance=ExtResource("3_q73ux")]
 visible = false
 
-[connection signal="start_game" from="StartScreen" to="." method="_on_start_screen_start_game"]
+[node name="EndScreen" parent="." instance=ExtResource("2_w5u0b")]
+visible = false
+
+[node name="StartScreen" parent="." instance=ExtResource("1_mtn5j")]
+
+[connection signal="game_over" from="Level" to="." method="_on_level_game_over"]
 [connection signal="exit_game" from="EndScreen" to="." method="_on_end_screen_exit_game"]
 [connection signal="restart_game" from="EndScreen" to="." method="_on_end_screen_restart_game"]
+[connection signal="start_game" from="StartScreen" to="." method="_on_start_screen_start_game"]
