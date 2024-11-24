@@ -15,6 +15,7 @@ config/version="0.1"
 config/tags=PackedStringArray("2d", "gamejam", "jenga", "pixel_art")
 run/main_scene="res://scenes/main.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
+boot_splash/image="res://assets/ux/game_jam_4_start_smaller.png"
 config/icon="res://icon.svg"
 
 [editor]
