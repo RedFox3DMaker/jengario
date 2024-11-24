@@ -39,35 +39,42 @@ func _input_event(_viewport: Viewport, event: InputEvent, _shape_idx: int) -> vo
 			clicked.emit(self)
 
 
-const MAX_VELOCITY: float = 175.0
-func _physics_process(delta: float) -> void:
+const MAX_VELOCITY: float = 50.0
+const MAX_APPLIED_FORCE: float = 250.0
+var previous_velocity: Vector2 = Vector2.ZERO
+func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
 	if held:
+		# normalize the direction of the mouse pointer 
+		# and compute velocity to apply force
 		var mouse_pos = get_global_mouse_position()
-		var global_motion = get_global_mouse_position() - global_transform.origin
-		# correction to avoid push block downward too much 
-		# when in contact with other blocks
-		print("global_motion: ", global_motion)
-		if $RayCast2DDownLeft.is_colliding() or $RayCast2DDownRight.is_colliding() and global_motion.y >= 0:
-			global_motion.y = 0
-		#if $RayCast2DUp.is_colliding() and global_motion.y <= -1:
-		#	global_motion.y *= 0.01
-		var velocity: Vector2 = global_motion / delta
-		print("velocity: ", velocity)
-		var velocity_norm = sqrt(velocity.x**2 + velocity.y**2)
-		if velocity_norm > MAX_VELOCITY:
+		var motion = get_global_mouse_position() - global_transform.origin
+		var delta = state.step;
+		var velocity = motion / state.step
+		var velocity_norm = 0.01 * velocity.length()
+		print("velocity_norm: ", velocity_norm)
+		if velocity_norm >= MAX_VELOCITY:
 			velocity *= MAX_VELOCITY / velocity_norm
-		global_transform.origin += delta * velocity
+		
+		var applied_force = mass * (velocity - previous_velocity) / delta
+		previous_velocity = velocity
+		var applied_force_norm = applied_force.length()
+		if applied_force_norm >= MAX_APPLIED_FORCE:
+			applied_force *= MAX_APPLIED_FORCE / applied_force_norm
+		print("applied_force: ", applied_force)
+		state.apply_force(applied_force)
 
 
 func pickup() -> void:
 	if held:
 		return
-	freeze = true
+	#freeze = true
+	sleeping = false
 	held = true
 
 
 func drop(impulse: Vector2 = Vector2.ZERO) -> void:
 	if held:
-		freeze = false
+		#freeze = false
 		apply_central_impulse(impulse)
+		previous_velocity = Vector2.ZERO
 		held = false
