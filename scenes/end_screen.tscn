@@ -1,7 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://cq3mp6s63imeu"]
+[gd_scene load_steps=6 format=3 uid="uid://cq3mp6s63imeu"]
 
 [ext_resource type="FontFile" uid="uid://b4qtwint4cvqk" path="res://assets/fonts/TmonMonsori.ttf.ttf" id="1_sqy2h"]
 [ext_resource type="Script" path="res://scripts/end_screen.gd" id="1_x0egx"]
+[ext_resource type="Texture2D" uid="uid://d2r57ajapjotf" path="res://assets/ux/banners.png" id="3_8llxl"]
+[ext_resource type="LabelSettings" uid="uid://cujr0d5coh8ba" path="res://assets/fonts/label_settings_end_banner.tres" id="4_qnv7k"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bs330"]
+atlas = ExtResource("3_8llxl")
+region = Rect2(47, 230, 389, 120)
 
 [node name="EndScreen" type="Control"]
 layout_mode = 3
@@ -16,7 +22,7 @@ script = ExtResource("1_x0egx")
 layout_mode = 0
 offset_right = 1152.0
 offset_bottom = 648.0
-color = Color(0, 0, 0, 0.196078)
+color = Color(0, 0, 0, 0.396078)
 
 [node name="RestartButton" type="Button" parent="."]
 layout_mode = 0
@@ -37,6 +43,22 @@ offset_bottom = 554.0
 theme_override_fonts/font = ExtResource("1_sqy2h")
 theme_override_font_sizes/font_size = 40
 text = "EXIT"
+
+[node name="GameOverBanner" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 384.0
+offset_top = 168.0
+offset_right = 773.0
+offset_bottom = 288.0
+texture = SubResource("AtlasTexture_bs330")
+
+[node name="Label" type="Label" parent="GameOverBanner"]
+layout_mode = 0
+offset_left = 104.0
+offset_right = 281.0
+offset_bottom = 90.0
+text = "Defeat"
+label_settings = ExtResource("4_qnv7k")
 
 [connection signal="pressed" from="RestartButton" to="." method="_on_restart_button_pressed"]
 [connection signal="pressed" from="ExitButton" to="." method="_on_exit_button_pressed"]

@@ -1,0 +1,7 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://cujr0d5coh8ba"]
+
+[ext_resource type="FontFile" uid="uid://jpp5u1lmawf1" path="res://assets/fonts/Adventure.otf" id="1_l77ux"]
+
+[resource]
+font = ExtResource("1_l77ux")
+font_size = 70

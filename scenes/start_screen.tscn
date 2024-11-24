@@ -1,14 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://vuykbibxj1dj"]
+[gd_scene load_steps=5 format=3 uid="uid://vuykbibxj1dj"]
 
 [ext_resource type="Script" path="res://scripts/start_screen.gd" id="1_q6itl"]
 [ext_resource type="FontFile" uid="uid://b4qtwint4cvqk" path="res://assets/fonts/TmonMonsori.ttf.ttf" id="2_5lymr"]
 [ext_resource type="Texture2D" uid="uid://cb1fgx2d2c4tv" path="res://assets/ux/game_jam_4_start_smaller.png" id="2_bwrbq"]
-[ext_resource type="FontFile" uid="uid://jpp5u1lmawf1" path="res://assets/fonts/Adventure.otf" id="4_qi3a6"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_k2vx7"]
-font = ExtResource("4_qi3a6")
-font_size = 70
-font_color = Color(0.104226, 0.204056, 0.201138, 0.85098)
+[ext_resource type="LabelSettings" uid="uid://kd1owykpsloi" path="res://assets/fonts/label_settings.tres" id="4_5nr1y"]
 
 [node name="StartScreen" type="Control"]
 layout_mode = 3
@@ -43,6 +38,6 @@ offset_top = 240.0
 offset_right = 711.0
 offset_bottom = 330.0
 text = "JengaRio"
-label_settings = SubResource("LabelSettings_k2vx7")
+label_settings = ExtResource("4_5nr1y")
 
 [connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]
