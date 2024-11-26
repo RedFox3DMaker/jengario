@@ -37,12 +37,14 @@ var held = false
 func _input_event(_viewport: Viewport, event: InputEvent, _shape_idx: int) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		if event.pressed:
+			AudioManager.play("res://assets/sounds/click sfx.mp3")
 			clicked.emit(self)
 
 
 const MAX_VELOCITY: float = 50.0
 const MAX_APPLIED_FORCE: float = 250.0
 var previous_velocity: Vector2 = Vector2.ZERO
+var sound_played = false
 func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
 	if held:
 		# normalize the direction of the mouse pointer
@@ -60,7 +62,10 @@ func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
 		if applied_force_norm >= MAX_APPLIED_FORCE:
 			applied_force *= MAX_APPLIED_FORCE / applied_force_norm
 		state.apply_force(applied_force)
-
+		
+		if not sound_played:
+			AudioManager.play("res://assets/sounds/dragging stone sound eff.mp3")
+		sound_played = true
 
 var previous_velocity_y = 980.0
 const GRAVITY_Y: float = 980.0
@@ -73,14 +78,12 @@ func _physics_process(delta: float) -> void:
 			print("fallen")
 			fallen.emit()
 
-
 func pickup() -> void:
 	if held:
 		return
 	sleeping = false
 	held = true
 	previous_velocity_y = 0.0
-
 
 func drop(impulse: Vector2 = Vector2.ZERO) -> void:
 	if held:
@@ -89,3 +92,5 @@ func drop(impulse: Vector2 = Vector2.ZERO) -> void:
 		held = false
 		if get_contact_count() == 0:
 			remove_from_group("bricks")
+	else:
+		sound_played = false

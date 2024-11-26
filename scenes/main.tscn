@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://xn7rklcn0ehf"]
+[gd_scene load_steps=6 format=3 uid="uid://xn7rklcn0ehf"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_5v4ly"]
 [ext_resource type="PackedScene" uid="uid://vuykbibxj1dj" path="res://scenes/start_screen.tscn" id="1_mtn5j"]
 [ext_resource type="PackedScene" uid="uid://cq3mp6s63imeu" path="res://scenes/end_screen.tscn" id="2_w5u0b"]
 [ext_resource type="PackedScene" uid="uid://dbhae44gmn1qh" path="res://scenes/level.tscn" id="3_q73ux"]
+[ext_resource type="AudioStream" uid="uid://dymd2gha7fujk" path="res://assets/sounds/click sfx.mp3" id="5_8li46"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_5v4ly")
@@ -16,6 +17,9 @@ visible = false
 visible = false
 
 [node name="StartScreen" parent="." instance=ExtResource("1_mtn5j")]
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_8li46")
 
 [connection signal="game_over" from="Level" to="." method="_on_level_game_over"]
 [connection signal="exit_game" from="EndScreen" to="." method="_on_end_screen_exit_game"]

@@ -57,7 +57,6 @@ font_color = Color(1, 0.286275, 0.27451, 1)
 script = ExtResource("1_0ikc8")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(7, 0)
 scale = Vector2(1, 1.05)
 texture = SubResource("AtlasTexture_1npiq")
 hframes = 3
