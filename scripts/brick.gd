@@ -1,12 +1,14 @@
+class_name Brick
+
+
 extends RigidBody2D
 
-class_name Brick
 
 signal clicked
 signal fallen
 
-enum BrickVariantType { TYPE_1, TYPE_2, TYPE_3 }
-@export var variant: BrickVariantType;
+enum BrickVariantType { SQUARE_DOT, SQUARE, RECTANGLE }
+@export var variant: BrickVariantType
 
 class BrickVariant:
 	var region: Vector2
@@ -18,9 +20,9 @@ class BrickVariant:
 		return self
 
 var variant_dict = {
-	BrickVariantType.TYPE_1: BrickVariant.new().init(Vector2(9, 13), Vector2(47,46)),
-	BrickVariantType.TYPE_2: BrickVariant.new().init(Vector2(68,13), Vector2(47,46)),
-	BrickVariantType.TYPE_3: BrickVariant.new().init(Vector2(9,61), Vector2(139,40)),
+	BrickVariantType.SQUARE_DOT: BrickVariant.new().init(Vector2(9, 13), Vector2(47,46)),
+	BrickVariantType.SQUARE: BrickVariant.new().init(Vector2(68,13), Vector2(47,46)),
+	BrickVariantType.RECTANGLE: BrickVariant.new().init(Vector2(9,61), Vector2(139,40)),
 }
 
 func _ready() -> void:

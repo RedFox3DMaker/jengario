@@ -1,5 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://vv1rkm5i2mhv"]
+[gd_scene load_steps=8 format=3 uid="uid://vv1rkm5i2mhv"]
 
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_0ikc8"]
 [ext_resource type="Texture2D" uid="uid://cli3knmkschc2" path="res://assets/sprites/gamejam_halloween_char.png" id="1_b2frq"]
 [ext_resource type="Texture2D" uid="uid://dxeb7ce0ur2w0" path="res://assets/tileset/player_indicators.tres" id="2_m30i2"]
 [ext_resource type="FontFile" uid="uid://b4qtwint4cvqk" path="res://assets/fonts/TmonMonsori.ttf.ttf" id="2_temqy"]
@@ -11,10 +12,12 @@ atlas = ExtResource("1_b2frq")
 size = Vector2(41, 45)
 
 [sub_resource type="LabelSettings" id="LabelSettings_5xlwo"]
+resource_local_to_scene = true
 font = ExtResource("2_temqy")
 font_color = Color(1, 0.286275, 0.27451, 1)
 
 [node name="Player" type="Area2D"]
+script = ExtResource("1_0ikc8")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = SubResource("AtlasTexture_1npiq")
