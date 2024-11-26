@@ -1,5 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://vv1rkm5i2mhv"]
+[gd_scene load_steps=11 format=3 uid="uid://vv1rkm5i2mhv"]
 
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_0ikc8"]
 [ext_resource type="Texture2D" uid="uid://cli3knmkschc2" path="res://assets/sprites/gamejam_halloween_char.png" id="1_b2frq"]
 [ext_resource type="Texture2D" uid="uid://dxeb7ce0ur2w0" path="res://assets/tileset/player_indicators.tres" id="2_m30i2"]
 [ext_resource type="FontFile" uid="uid://b4qtwint4cvqk" path="res://assets/fonts/TmonMonsori.ttf.ttf" id="2_temqy"]
@@ -10,13 +11,53 @@ atlas = ExtResource("1_b2frq")
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lxpu4"]
 size = Vector2(41, 45)
 
+[sub_resource type="Animation" id="Animation_mnwwi"]
+resource_name = "idle"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.5, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1, 1.05), Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_hmnbb"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1.05)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7gg7w"]
+_data = {
+"RESET": SubResource("Animation_hmnbb"),
+"idle": SubResource("Animation_mnwwi")
+}
+
 [sub_resource type="LabelSettings" id="LabelSettings_5xlwo"]
+resource_local_to_scene = true
 font = ExtResource("2_temqy")
 font_color = Color(1, 0.286275, 0.27451, 1)
 
 [node name="Player" type="Area2D"]
+script = ExtResource("1_0ikc8")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(1, 1.05)
 texture = SubResource("AtlasTexture_1npiq")
 hframes = 3
 vframes = 6
@@ -26,6 +67,10 @@ position = Vector2(-2.5, 2.5)
 shape = SubResource("RectangleShape2D_lxpu4")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_7gg7w")
+}
+autoplay = "idle"
 
 [node name="PlayerIndicator" type="TextureRect" parent="."]
 offset_left = -11.0

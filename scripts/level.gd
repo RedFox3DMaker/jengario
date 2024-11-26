@@ -5,7 +5,7 @@ signal game_over
 
 
 var held_object: Brick = null
-
+var tower_falling_played = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -19,8 +19,10 @@ func _on_brick_clicked(object) -> void:
 		object.pickup()
 		held_object = object
 
-
 func _on_brick_fallen() -> void:
+	if not tower_falling_played:
+		tower_falling_played = true
+		AudioManager.play("res://assets/sounds/tower falling.mp3")
 	game_over.emit()
 
 

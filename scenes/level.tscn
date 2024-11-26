@@ -62,5 +62,19 @@ position = Vector2(590, 368)
 position = Vector2(542, 322)
 variant = 2
 
-[node name="Player" parent="." instance=ExtResource("6_hjt0i")]
-position = Vector2(364, 551)
+[node name="CanvasGroup" type="CanvasGroup" parent="."]
+
+[node name="Player 1" parent="CanvasGroup" instance=ExtResource("6_hjt0i")]
+position = Vector2(343, 551)
+
+[node name="Player 2" parent="CanvasGroup" instance=ExtResource("6_hjt0i")]
+position = Vector2(181, 551)
+variant = 1
+
+[node name="Player 3" parent="CanvasGroup" instance=ExtResource("6_hjt0i")]
+position = Vector2(742, 551)
+variant = 2
+
+[node name="Player 4" parent="CanvasGroup" instance=ExtResource("6_hjt0i")]
+position = Vector2(905, 551)
+variant = 3

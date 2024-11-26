@@ -18,6 +18,10 @@ config/features=PackedStringArray("4.3", "GL Compatibility")
 boot_splash/image="res://assets/ux/game_jam_4_start_smaller.png"
 config/icon="res://icon.svg"
 
+[autoload]
+
+AudioManager="*res://scripts/audio_manager.gd"
+
 [editor]
 
 version_control/plugin_name="GitPlugin"
