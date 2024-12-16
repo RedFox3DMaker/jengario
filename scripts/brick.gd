@@ -98,12 +98,14 @@ func pickup() -> void:
 	sleeping = false
 	held = true
 	previous_velocity_y = 0.0
+	lock_rotation = true
 
 func drop(impulse: Vector2 = Vector2.ZERO) -> void:
 	if held:
 		apply_central_impulse(impulse)
 		previous_velocity = Vector2.ZERO
 		held = false
+		lock_rotation = false
 		if get_contact_count() == 0:
 			remove_from_group("bricks")
 	else:
