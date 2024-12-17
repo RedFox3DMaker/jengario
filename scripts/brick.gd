@@ -7,6 +7,10 @@ extends RigidBody2D
 signal clicked
 signal fallen
 
+@onready var explosion_animation: AnimatedSprite2D = $ExplosionAnimation
+@onready var sprite: Sprite2D = $Sprite2D
+@onready var collision_shape: CollisionShape2D = $CollisionShape2D
+
 enum BrickVariantType { SQUARE_DOT, SQUARE, RECTANGLE }
 @export var variant: BrickVariantType
 
@@ -28,11 +32,14 @@ var variant_dict = {
 func _ready() -> void:
 	freeze = true
 	var brick_variant = variant_dict[variant]
-	$Sprite2D.region_rect = Rect2(brick_variant.region, brick_variant.size)
-	$CollisionShape2D.shape.size = brick_variant.size
-	freeze = false
-
-
+	sprite.region_rect = Rect2(brick_variant.region, brick_variant.size)
+	collision_shape.shape.size = brick_variant.size
+	if variant == BrickVariantType.RECTANGLE:
+		explosion_animation.animation = &"rectangle_explosion"
+	else:
+		explosion_animation.animation = &"square_explosion"
+		
+		
 var held = false
 func _input_event(_viewport: Viewport, event: InputEvent, _shape_idx: int) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
@@ -75,8 +82,13 @@ func _physics_process(delta: float) -> void:
 		var acceleration_y = (linear_velocity.y - previous_velocity_y) / delta
 		previous_velocity_y = linear_velocity.y
 		if acceleration_y >= 0.5 * GRAVITY_Y and rotation >= THETA_FALL:
-			print("fallen")
 			fallen.emit()
+			
+	if not is_in_group("bricks") and get_contact_count() == 0:
+		explosion_animation.visible = true
+		sprite.visible = false
+		explosion_animation.play()
+			
 
 func pickup() -> void:
 	if held:
@@ -84,13 +96,23 @@ func pickup() -> void:
 	sleeping = false
 	held = true
 	previous_velocity_y = 0.0
+	lock_rotation = true
 
 func drop(impulse: Vector2 = Vector2.ZERO) -> void:
 	if held:
 		apply_central_impulse(impulse)
 		previous_velocity = Vector2.ZERO
 		held = false
+		lock_rotation = false
 		if get_contact_count() == 0:
 			remove_from_group("bricks")
 	else:
 		sound_played = false
+
+
+func _on_explosion_animation_animation_finished() -> void:
+	queue_free()
+	
+	
+func get_size():
+	return collision_shape.shape.size

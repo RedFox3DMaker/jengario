@@ -1,18 +1,105 @@
-[gd_scene load_steps=5 format=3 uid="uid://8c2a27bb0lyd"]
+[gd_scene load_steps=18 format=3 uid="uid://8c2a27bb0lyd"]
 
 [ext_resource type="Texture2D" uid="uid://cvswdpff8fgvw" path="res://assets/tileset/brick.tres" id="1_k8yqb"]
 [ext_resource type="PhysicsMaterial" uid="uid://dmgxi0wdnkcym" path="res://assets/materials/new_physics_material.tres" id="1_yj2e7"]
 [ext_resource type="Script" path="res://scripts/brick.gd" id="1_yqdgc"]
+[ext_resource type="Texture2D" uid="uid://ky2ltyqqlqwl" path="res://assets/sprites/rectangle_block_animation.png" id="4_46krv"]
+[ext_resource type="Texture2D" uid="uid://csr3h5gly0wf8" path="res://assets/sprites/square_block_animation.png" id="5_mvamd"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nfsy6"]
 resource_local_to_scene = true
 size = Vector2(47, 46)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fcdk3"]
+atlas = ExtResource("4_46krv")
+region = Rect2(0, 0, 192, 112)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2v0w0"]
+atlas = ExtResource("4_46krv")
+region = Rect2(192, 0, 192, 112)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_48t5y"]
+atlas = ExtResource("4_46krv")
+region = Rect2(384, 0, 192, 112)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xob43"]
+atlas = ExtResource("4_46krv")
+region = Rect2(576, 0, 192, 112)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5fgxd"]
+atlas = ExtResource("4_46krv")
+region = Rect2(768, 0, 192, 112)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4vpjl"]
+atlas = ExtResource("5_mvamd")
+region = Rect2(0, 0, 112, 112)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ehcpk"]
+atlas = ExtResource("5_mvamd")
+region = Rect2(112, 0, 112, 112)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bexs7"]
+atlas = ExtResource("5_mvamd")
+region = Rect2(224, 0, 112, 112)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mscw6"]
+atlas = ExtResource("5_mvamd")
+region = Rect2(336, 0, 112, 112)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0l0h1"]
+atlas = ExtResource("5_mvamd")
+region = Rect2(448, 0, 112, 112)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0couu"]
+animations = [{
+"frames": [{
+"duration": 0.2,
+"texture": SubResource("AtlasTexture_fcdk3")
+}, {
+"duration": 0.2,
+"texture": SubResource("AtlasTexture_2v0w0")
+}, {
+"duration": 0.2,
+"texture": SubResource("AtlasTexture_48t5y")
+}, {
+"duration": 0.2,
+"texture": SubResource("AtlasTexture_xob43")
+}, {
+"duration": 0.2,
+"texture": SubResource("AtlasTexture_5fgxd")
+}],
+"loop": false,
+"name": &"rectangle_explosion",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 0.2,
+"texture": SubResource("AtlasTexture_4vpjl")
+}, {
+"duration": 0.2,
+"texture": SubResource("AtlasTexture_ehcpk")
+}, {
+"duration": 0.2,
+"texture": SubResource("AtlasTexture_bexs7")
+}, {
+"duration": 0.2,
+"texture": SubResource("AtlasTexture_mscw6")
+}, {
+"duration": 0.2,
+"texture": SubResource("AtlasTexture_0l0h1")
+}],
+"loop": false,
+"name": &"square_explosion",
+"speed": 5.0
+}]
 
 [node name="Brick" type="RigidBody2D" groups=["bricks"]]
 input_pickable = true
 mass = 0.02
 physics_material_override = ExtResource("1_yj2e7")
 freeze_mode = 1
+contact_monitor = true
+max_contacts_reported = 1
 script = ExtResource("1_yqdgc")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -22,3 +109,10 @@ region_rect = Rect2(9, 13, 47, 46)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_nfsy6")
+
+[node name="ExplosionAnimation" type="AnimatedSprite2D" parent="."]
+visible = false
+sprite_frames = SubResource("SpriteFrames_0couu")
+animation = &"square_explosion"
+
+[connection signal="animation_finished" from="ExplosionAnimation" to="." method="_on_explosion_animation_animation_finished"]
