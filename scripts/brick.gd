@@ -38,9 +38,8 @@ func _ready() -> void:
 		explosion_animation.animation = &"rectangle_explosion"
 	else:
 		explosion_animation.animation = &"square_explosion"
-	freeze = false
-
-
+		
+		
 var held = false
 func _input_event(_viewport: Viewport, event: InputEvent, _shape_idx: int) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
@@ -83,7 +82,6 @@ func _physics_process(delta: float) -> void:
 		var acceleration_y = (linear_velocity.y - previous_velocity_y) / delta
 		previous_velocity_y = linear_velocity.y
 		if acceleration_y >= 0.5 * GRAVITY_Y and rotation >= THETA_FALL:
-			print("fallen")
 			fallen.emit()
 			
 	if not is_in_group("bricks") and get_contact_count() == 0:
@@ -114,3 +112,7 @@ func drop(impulse: Vector2 = Vector2.ZERO) -> void:
 
 func _on_explosion_animation_animation_finished() -> void:
 	queue_free()
+	
+	
+func get_size():
+	return collision_shape.shape.size

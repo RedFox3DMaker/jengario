@@ -15,6 +15,7 @@ func _ready() -> void:
 func _on_start_screen_start_game() -> void:
 	start_screen.hide()
 	level.show()
+	level.unfreeze_tower()
 	Input.set_custom_mouse_cursor(mouse_cursor_p1)
 	play_music("res://assets/sounds/mdj gameplay.mp3")
 
@@ -32,6 +33,7 @@ func _on_end_screen_restart_game() -> void:
 	add_child(level)
 	move_child(level, 0)
 	play_music("res://assets/sounds/mdj gameplay.mp3")
+	level.unfreeze_tower()
 	
 func _on_level_game_over() -> void:
 	end_screen.show()
