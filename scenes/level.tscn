@@ -8,7 +8,6 @@
 
 [node name="Level" type="Node2D"]
 script = ExtResource("1_66p50")
-nb_stacks = 3
 brick_scene = ExtResource("3_vipfn")
 
 [node name="ColorRect" type="TextureRect" parent="."]
