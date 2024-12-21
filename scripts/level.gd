@@ -84,6 +84,10 @@ func create_rectangle_level(level_index: int, elevation: Vector2) -> Vector2:
 
 # function to build the tower
 func init_tower() -> void:
+	# remove old blocks
+	get_tree().call_group("bricks", &"queue_free")
+	
+	# create the new tower
 	var elevation = Vector2.ZERO
 	for idx in range(nb_stacks):
 		if idx % 2 == 0:
