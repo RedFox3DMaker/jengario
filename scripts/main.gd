@@ -12,8 +12,11 @@ var mouse_cursor_p1 = load("res://assets/ux/cursor_1.png")
 func _ready() -> void:
 	play_music("res://assets/sounds/menu song mdj.mp3")
 
-func _on_start_screen_start_game() -> void:
+func _on_start_screen_start_game(nb_levels: int) -> void:
 	start_screen.hide()
+	if nb_levels != level.nb_stacks:
+		level.nb_stacks = nb_levels
+		level.init_tower()
 	level.show()
 	level.unfreeze_tower()
 	Input.set_custom_mouse_cursor(mouse_cursor_p1)

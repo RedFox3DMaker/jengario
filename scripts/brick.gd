@@ -5,7 +5,7 @@ extends RigidBody2D
 
 
 signal clicked
-signal fallen
+#signal fallen
 
 @onready var explosion_animation: AnimatedSprite2D = $ExplosionAnimation
 @onready var sprite: Sprite2D = $Sprite2D
@@ -74,16 +74,17 @@ func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
 			AudioManager.play("res://assets/sounds/dragging stone sound eff.mp3")
 		sound_played = true
 
-var previous_velocity_y = 980.0
-const GRAVITY_Y: float = 980.0
-const THETA_FALL: float = deg_to_rad(5)
-func _physics_process(delta: float) -> void:
+#var previous_velocity_y = 980.0
+#const GRAVITY_Y: float = 980.0
+#const THETA_FALL: float = deg_to_rad(5)
+func _physics_process(_delta: float) -> void:
+	"""
 	if not held and is_in_group("bricks"):
 		var acceleration_y = (linear_velocity.y - previous_velocity_y) / delta
 		previous_velocity_y = linear_velocity.y
 		if acceleration_y >= 0.5 * GRAVITY_Y and rotation >= THETA_FALL:
 			fallen.emit()
-			
+	"""		
 	if not is_in_group("bricks") and get_contact_count() == 0:
 		explosion_animation.visible = true
 		sprite.visible = false
@@ -95,7 +96,7 @@ func pickup() -> void:
 		return
 	sleeping = false
 	held = true
-	previous_velocity_y = 0.0
+	#previous_velocity_y = 0.0
 	lock_rotation = true
 
 func drop(impulse: Vector2 = Vector2.ZERO) -> void:
@@ -105,7 +106,8 @@ func drop(impulse: Vector2 = Vector2.ZERO) -> void:
 		held = false
 		lock_rotation = false
 		if get_contact_count() == 0:
-			remove_from_group("bricks")
+			for group in get_groups():
+				remove_from_group(group)
 	else:
 		sound_played = false
 
@@ -114,5 +116,10 @@ func _on_explosion_animation_animation_finished() -> void:
 	queue_free()
 	
 	
-func get_size():
+func get_size() -> Vector2:
 	return collision_shape.shape.size
+	
+func get_rect() -> Rect2:
+	var local_rect = collision_shape.shape.get_rect()
+	var global_rect: Rect2 = Rect2(local_rect.position + global_position, local_rect.size) 
+	return global_rect
