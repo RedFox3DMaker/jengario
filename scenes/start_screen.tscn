@@ -32,6 +32,7 @@ theme_override_font_sizes/font_size = 40
 text = "START"
 
 [node name="SettingsButton" type="Button" parent="."]
+layout_mode = 0
 offset_left = 472.0
 offset_top = 488.0
 offset_right = 682.0

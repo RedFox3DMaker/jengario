@@ -17,7 +17,7 @@ var tower_falling_played = false
 
 func connect_brick_callbacks(brick_node: Brick) -> void:
 	brick_node.clicked.connect(_on_brick_clicked)
-	brick_node.fallen.connect(_on_brick_fallen)
+	#brick_node.fallen.connect(_on_brick_fallen)
 
 
 # create a level with 3 square brick
@@ -122,3 +122,75 @@ func _unhandled_input(event: InputEvent) -> void:
 		if held_object and !event.pressed:
 			held_object.drop()
 			held_object = null
+			
+			
+func compute_tower_level_rect(level: int) -> Rect2:
+	var level_rect: Rect2 = Rect2()
+	for brick: Brick in get_tree().get_nodes_in_group("level" + str(level)):
+		if level_rect.position != Vector2.ZERO:
+			level_rect = level_rect.merge(brick.get_rect())
+		else:
+			level_rect = brick.get_rect()
+	
+	return level_rect
+	
+			
+func is_tower_collasping() -> bool:
+	"""
+	Check the state of the tower.
+	Start top level, compute the bounding box center of the level
+	Get the level below, compute the x lowest and highest coordinates 
+	of all the bouding boxes.
+	If the center x coordinate is not between them, the tower is collapsing
+	"""
+	var is_collapsing = false
+	var top_level_checked = false
+	# from top level to down
+	var levels_centers: Array[float] = []
+	for idx in range(nb_stacks-1, 1, -1):
+		# compute the bounding box of the level
+		var level_rect: Rect2 = compute_tower_level_rect(idx)
+		# check the bounding box is valid
+		if level_rect.size == Vector2.ZERO:
+			if not top_level_checked:
+				continue
+			else:
+				is_collapsing = true
+				break
+		
+		# first top level is checked
+		if not top_level_checked:
+			top_level_checked = true
+		
+		# get the level below
+		var level_below_rect: Rect2 = compute_tower_level_rect(idx - 1)
+		
+		# check bounding box validity
+		if level_below_rect.size == Vector2.ZERO:
+			is_collapsing = true
+			break
+		
+		# get the bbox center (needs to be accumulated with previous levels)
+		levels_centers.push_back(level_rect.get_center().x)
+		var center_x = 0.
+		for center in levels_centers:
+			center_x += center
+		center_x /= levels_centers.size()
+		
+		# get the top left, bottom right x coordinates:
+		var level_below_x_left = level_below_rect.position.x
+		var level_below_x_right = level_below_rect.end.x
+		
+		if level_below_x_left > center_x  or center_x > level_below_x_right:
+			print("is_collapsing")
+			is_collapsing = true
+			break
+		
+	return is_collapsing
+	
+
+func _physics_process(_delta: float) -> void:
+	if is_tower_collasping() and not tower_falling_played:
+		tower_falling_played = true
+		AudioManager.play("res://assets/sounds/tower falling.mp3")
+		game_over.emit()
