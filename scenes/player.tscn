@@ -1,12 +1,12 @@
-[gd_scene load_steps=83 format=3 uid="uid://vv1rkm5i2mhv"]
+[gd_scene load_steps=84 format=3 uid="uid://vv1rkm5i2mhv"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_0ikc8"]
 [ext_resource type="Texture2D" uid="uid://bu1cn18s0jkmd" path="res://assets/sprites/Men.png" id="2_efipu"]
-[ext_resource type="Texture2D" uid="uid://dxeb7ce0ur2w0" path="res://assets/tileset/player_indicators.tres" id="2_m30i2"]
 [ext_resource type="FontFile" uid="uid://b4qtwint4cvqk" path="res://assets/fonts/TmonMonsori.ttf.ttf" id="2_temqy"]
 [ext_resource type="Texture2D" uid="uid://cy2knkgviye6a" path="res://assets/sprites/Women.png" id="3_en10l"]
 [ext_resource type="Texture2D" uid="uid://dk28p0nomfila" path="res://assets/sprites/JellyMonster.png" id="4_cp3kv"]
 [ext_resource type="Texture2D" uid="uid://d1gaqsn0gn2qd" path="res://assets/sprites/Zombie.png" id="5_7caqy"]
+[ext_resource type="Texture2D" uid="uid://b56fwxs6ngee4" path="res://assets/sprites/player_icons.png" id="6_e6t3u"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5tyob"]
 atlas = ExtResource("2_efipu")
@@ -538,6 +538,11 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lxpu4"]
 size = Vector2(43, 50)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_la6fb"]
+resource_local_to_scene = true
+atlas = ExtResource("6_e6t3u")
+region = Rect2(0, 0, 292, 248)
+
 [sub_resource type="LabelSettings" id="LabelSettings_5xlwo"]
 resource_local_to_scene = true
 font = ExtResource("2_temqy")
@@ -556,18 +561,18 @@ position = Vector2(-1.5, 2)
 shape = SubResource("RectangleShape2D_lxpu4")
 
 [node name="PlayerIndicator" type="TextureRect" parent="."]
-offset_left = -11.0
+offset_left = -7.0
 offset_top = -42.0
-offset_right = 835.0
-offset_bottom = 461.0
+offset_right = 839.0
+offset_bottom = 383.0
 scale = Vector2(0.0174788, 0.0329214)
-texture = ExtResource("2_m30i2")
+texture = SubResource("AtlasTexture_la6fb")
 
 [node name="PlayerLabel" type="Label" parent="."]
-offset_left = -21.0
-offset_top = -65.0
-offset_right = 19.0
-offset_bottom = -42.0
+offset_left = -18.0
+offset_top = -64.0
+offset_right = 24.0
+offset_bottom = -41.0
 text = "1P"
 label_settings = SubResource("LabelSettings_5xlwo")
 horizontal_alignment = 1
