@@ -5,14 +5,17 @@ extends RigidBody2D
 
 
 signal clicked
-#signal fallen
+signal dropped
+
 
 @onready var explosion_animation: AnimatedSprite2D = $ExplosionAnimation
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
 
+
 enum BrickVariantType { SQUARE_DOT, SQUARE, RECTANGLE }
 @export var variant: BrickVariantType
+
 
 class BrickVariant:
 	var region: Vector2
@@ -22,6 +25,7 @@ class BrickVariant:
 		self.region = i_region
 		self.size = i_size
 		return self
+
 
 var variant_dict = {
 	BrickVariantType.SQUARE_DOT: BrickVariant.new().init(Vector2(9, 13), Vector2(47,46)),
@@ -38,14 +42,14 @@ func _ready() -> void:
 		explosion_animation.animation = &"rectangle_explosion"
 	else:
 		explosion_animation.animation = &"square_explosion"
-		
-		
+
+
 var held = false
 func _input_event(_viewport: Viewport, event: InputEvent, _shape_idx: int) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		if event.pressed:
 			AudioManager.play("res://assets/sounds/click sfx.mp3")
-			clicked.emit(self)
+			self.clicked.emit(self)
 
 
 const MAX_VELOCITY: float = 50.0
@@ -69,27 +73,32 @@ func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
 		if applied_force_norm >= MAX_APPLIED_FORCE:
 			applied_force *= MAX_APPLIED_FORCE / applied_force_norm
 		state.apply_force(applied_force)
-		
+
 		if not sound_played:
 			AudioManager.play("res://assets/sounds/dragging stone sound eff.mp3")
 		sound_played = true
 
-#var previous_velocity_y = 980.0
-#const GRAVITY_Y: float = 980.0
-#const THETA_FALL: float = deg_to_rad(5)
-func _physics_process(_delta: float) -> void:
-	"""
-	if not held and is_in_group("bricks"):
-		var acceleration_y = (linear_velocity.y - previous_velocity_y) / delta
-		previous_velocity_y = linear_velocity.y
-		if acceleration_y >= 0.5 * GRAVITY_Y and rotation >= THETA_FALL:
-			fallen.emit()
-	"""		
-	if not is_in_group("bricks") and get_contact_count() == 0:
+
+func _physics_process(delta: float) -> void:
+	if not is_in_group("bricks") and not self.held: 
 		explosion_animation.visible = true
 		sprite.visible = false
 		explosion_animation.play()
-			
+	elif self.held:
+		# check if there is a brick above...
+		const TEST_SPEED = 10
+		var is_contact_up = self.test_move(self.transform, Vector2.UP * delta * TEST_SPEED)
+		var is_contact_down = false
+		
+		# ... or below, except on the floor
+		if not is_in_group("level0"):
+			is_contact_down = self.test_move(self.transform, Vector2.DOWN * delta * TEST_SPEED)
+		
+		# if there is no contact then remove from all groups
+		if not is_contact_up and not is_contact_down:
+			for group in get_groups():
+				remove_from_group(group)
+
 
 func pickup() -> void:
 	if held:
@@ -99,27 +108,27 @@ func pickup() -> void:
 	#previous_velocity_y = 0.0
 	lock_rotation = true
 
+
 func drop(impulse: Vector2 = Vector2.ZERO) -> void:
 	if held:
 		apply_central_impulse(impulse)
 		previous_velocity = Vector2.ZERO
 		held = false
 		lock_rotation = false
-		if get_contact_count() == 0:
-			for group in get_groups():
-				remove_from_group(group)
+		self.dropped.emit()
 	else:
 		sound_played = false
 
 
 func _on_explosion_animation_animation_finished() -> void:
 	queue_free()
-	
-	
+
+
 func get_size() -> Vector2:
 	return collision_shape.shape.size
-	
+
+
 func get_rect() -> Rect2:
 	var local_rect = collision_shape.shape.get_rect()
-	var global_rect: Rect2 = Rect2(local_rect.position + global_position, local_rect.size) 
+	var global_rect: Rect2 = Rect2(local_rect.position + global_position, local_rect.size)
 	return global_rect

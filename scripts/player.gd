@@ -19,12 +19,12 @@ func _ready() -> void:
 		PlayerVariantType.BOY:
 			anim = &"Boy"
 			label = "1P"
-			player_indicator.texture.region = Rect2(0, 0, 292, 248) 
+			player_indicator.texture.region = Rect2(0, 0, 292, 248)
 			color_tone = Color.CRIMSON
 		PlayerVariantType.ZOMBIE:
 			anim = &"Zombie"
 			label = "2P"
-			player_indicator.texture.region = Rect2(662, 0, 293, 248) 
+			player_indicator.texture.region = Rect2(662, 0, 293, 248)
 			color_tone = Color.LIME_GREEN
 		PlayerVariantType.GIRL:
 			anim = &"Girl"
@@ -35,16 +35,16 @@ func _ready() -> void:
 		PlayerVariantType.MONSTER:
 			anim = &"Monster"
 			label = "4P"
-			player_indicator.texture.region = Rect2(994, 0, 292, 248) 
+			player_indicator.texture.region = Rect2(994, 0, 292, 248)
 			color_tone = Color.REBECCA_PURPLE
 			flip = true
 			sprite.scale = 0.4 * Vector2.ONE
-		
+
 	sprite.animation = anim
 	sprite.flip_h = flip
 	player_label.text = label
 	player_label.label_settings.font_color = color_tone
-	
+
 	# start the animation
 	sprite.play()
 

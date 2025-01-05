@@ -2,39 +2,39 @@
 
 [ext_resource type="Script" path="res://scripts/level.gd" id="1_66p50"]
 [ext_resource type="Texture2D" uid="uid://mmaknu8xpkof" path="res://assets/ux/level_background.png" id="1_k4oli"]
+[ext_resource type="PackedScene" uid="uid://bxfn0binhwquf" path="res://scenes/tower.tscn" id="2_3vaul"]
 [ext_resource type="TileSet" uid="uid://cjusyh70223hq" path="res://assets/tileset/ground.tres" id="2_a7qj7"]
-[ext_resource type="PackedScene" uid="uid://8c2a27bb0lyd" path="res://scenes/brick.tscn" id="3_vipfn"]
 [ext_resource type="PackedScene" uid="uid://vv1rkm5i2mhv" path="res://scenes/player.tscn" id="6_hjt0i"]
 
 [node name="Level" type="Node2D"]
 script = ExtResource("1_66p50")
-brick_scene = ExtResource("3_vipfn")
+tower_scene = ExtResource("2_3vaul")
 
-[node name="ColorRect" type="TextureRect" parent="."]
+[node name="Background" type="TextureRect" parent="."]
 offset_right = 1152.0
 offset_bottom = 648.0
 texture = ExtResource("1_k4oli")
 
-[node name="GroundTileMapLayer" type="TileMapLayer" parent="ColorRect"]
+[node name="GroundTileMapLayer" type="TileMapLayer" parent="Background"]
 tile_map_data = PackedByteArray("AAAAAAYAAAAAAAAAAAABAAYAAAAAAAAAAAACAAYAAAAAAAAAAAADAAYAAAAAAAAAAAAEAAYAAAAAAAAAAAAFAAYAAAAAAAAAAAALAAYAAAAAAAAAAAAGAAYAAAAAAAAAAAAHAAYAAAAAAAAAAAAIAAYAAAAAAAAAAAAJAAYAAAAAAAAAAAAKAAYAAAAAAAAAAAA=")
 tile_set = ExtResource("2_a7qj7")
 
-[node name="CanvasGroup" type="CanvasGroup" parent="."]
+[node name="Players" type="CanvasGroup" parent="."]
 
-[node name="Player 1" parent="CanvasGroup" instance=ExtResource("6_hjt0i")]
+[node name="Player 1" parent="Players" instance=ExtResource("6_hjt0i")]
 position = Vector2(343, 551)
 
-[node name="Player 2" parent="CanvasGroup" instance=ExtResource("6_hjt0i")]
+[node name="Player 2" parent="Players" instance=ExtResource("6_hjt0i")]
 position = Vector2(181, 551)
 variant = 1
 
-[node name="Player 3" parent="CanvasGroup" instance=ExtResource("6_hjt0i")]
+[node name="Player 3" parent="Players" instance=ExtResource("6_hjt0i")]
 position = Vector2(742, 551)
 variant = 2
 
-[node name="Player 4" parent="CanvasGroup" instance=ExtResource("6_hjt0i")]
+[node name="Player 4" parent="Players" instance=ExtResource("6_hjt0i")]
 position = Vector2(905, 551)
 variant = 3
 
-[node name="BrickOrigin" type="Marker2D" parent="."]
+[node name="TowerOrigin" type="Marker2D" parent="."]
 position = Vector2(494, 552)

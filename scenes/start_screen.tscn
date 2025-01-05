@@ -79,9 +79,9 @@ layout_mode = 0
 offset_left = 120.0
 offset_right = 203.063
 offset_bottom = 31.0
-min_value = 5.0
+min_value = 6.0
 max_value = 10.0
-value = 5.0
+value = 6.0
 
 [connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="SettingsButton" to="." method="_on_settings_button_pressed"]
