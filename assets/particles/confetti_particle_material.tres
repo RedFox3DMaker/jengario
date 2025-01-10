@@ -1,0 +1,18 @@
+[gd_resource type="ParticleProcessMaterial" format=3 uid="uid://cphmyardyapvt"]
+
+[resource]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(288, 1, 1)
+angle_min = -58.5
+angle_max = 108.0
+inherit_velocity_ratio = 1.0
+direction = Vector3(0, 1, 0)
+initial_velocity_min = 130.43
+initial_velocity_max = 290.13
+angular_velocity_min = -1.60933e-05
+angular_velocity_max = 45.0
+gravity = Vector3(0, 98, 0)
+scale_min = 0.5
+scale_max = 0.5
+turbulence_enabled = true

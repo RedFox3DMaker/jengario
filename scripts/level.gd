@@ -22,6 +22,7 @@ func build_tower(nb_stacks: int) -> void:
 	self.tower.position = self.tower_origin.position
 	self.add_child(self.tower)
 	self.tower.build(nb_stacks)
+	self.tower_falling_played = false
 
 
 func unfreeze_tower() -> void:

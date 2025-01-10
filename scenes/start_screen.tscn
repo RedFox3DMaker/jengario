@@ -1,7 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://vuykbibxj1dj"]
+[gd_scene load_steps=4 format=3 uid="uid://vuykbibxj1dj"]
 
 [ext_resource type="Script" path="res://scripts/start_screen.gd" id="1_q6itl"]
-[ext_resource type="FontFile" uid="uid://b4qtwint4cvqk" path="res://assets/fonts/TmonMonsori.ttf.ttf" id="2_5lymr"]
 [ext_resource type="Texture2D" uid="uid://cb1fgx2d2c4tv" path="res://assets/ux/game_jam_4_start_smaller.png" id="2_bwrbq"]
 [ext_resource type="LabelSettings" uid="uid://kd1owykpsloi" path="res://assets/fonts/label_settings.tres" id="4_5nr1y"]
 
@@ -21,68 +20,14 @@ offset_right = 1152.0
 offset_bottom = 732.0
 texture = ExtResource("2_bwrbq")
 
-[node name="StartButton" type="Button" parent="."]
-layout_mode = 1
-offset_left = 488.0
-offset_top = 392.0
-offset_right = 663.0
-offset_bottom = 463.0
-theme_override_fonts/font = ExtResource("2_5lymr")
-theme_override_font_sizes/font_size = 40
-text = "START"
-
-[node name="SettingsButton" type="Button" parent="."]
+[node name="CenterContainer" type="CenterContainer" parent="."]
 layout_mode = 0
-offset_left = 472.0
-offset_top = 488.0
-offset_right = 682.0
-offset_bottom = 559.0
-theme_override_fonts/font = ExtResource("2_5lymr")
-theme_override_font_sizes/font_size = 40
-text = "SETTINGS"
+offset_left = 425.0
+offset_top = 200.0
+offset_right = 696.0
+offset_bottom = 290.0
 
-[node name="Title" type="Label" parent="."]
-layout_mode = 0
-offset_left = 440.0
-offset_top = 240.0
-offset_right = 711.0
-offset_bottom = 330.0
+[node name="Title" type="Label" parent="CenterContainer"]
+layout_mode = 2
 text = "JengaRio"
 label_settings = ExtResource("4_5nr1y")
-
-[node name="AcceptDialog" type="AcceptDialog" parent="."]
-title = "Settings"
-initial_position = 1
-size = Vector2i(325, 170)
-unresizable = true
-
-[node name="Control" type="Control" parent="AcceptDialog"]
-layout_mode = 3
-anchors_preset = 0
-offset_left = 8.0
-offset_top = 8.0
-offset_right = 317.0
-offset_bottom = 121.0
-
-[node name="Label" type="Label" parent="AcceptDialog/Control"]
-layout_mode = 0
-offset_left = 55.0
-offset_top = 40.0
-offset_right = 160.0
-offset_bottom = 63.0
-size_flags_horizontal = 0
-text = "Tower levels: "
-metadata/_edit_use_anchors_ = true
-
-[node name="SpinBox" type="SpinBox" parent="AcceptDialog/Control/Label"]
-layout_mode = 0
-offset_left = 120.0
-offset_right = 203.063
-offset_bottom = 31.0
-min_value = 6.0
-max_value = 10.0
-value = 6.0
-
-[connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]
-[connection signal="pressed" from="SettingsButton" to="." method="_on_settings_button_pressed"]
-[connection signal="confirmed" from="AcceptDialog" to="." method="_on_accept_dialog_confirmed"]

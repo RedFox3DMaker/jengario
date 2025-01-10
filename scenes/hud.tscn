@@ -1,0 +1,30 @@
+[gd_scene load_steps=6 format=3 uid="uid://bm3oldggrccl6"]
+
+[ext_resource type="Script" path="res://scripts/hud.gd" id="1_16h66"]
+[ext_resource type="PackedScene" uid="uid://vuykbibxj1dj" path="res://scenes/start_screen.tscn" id="1_vo74i"]
+[ext_resource type="PackedScene" uid="uid://cq3mp6s63imeu" path="res://scenes/end_screen.tscn" id="2_hc5tb"]
+[ext_resource type="PackedScene" uid="uid://ccc4m4pk8vr23" path="res://scenes/information_screen.tscn" id="3_flov8"]
+[ext_resource type="PackedScene" uid="uid://roiim6gaiwag" path="res://scenes/buttons_controls.tscn" id="4_kkoo0"]
+
+[node name="HUD" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_16h66")
+
+[node name="StartScreen" parent="." instance=ExtResource("1_vo74i")]
+layout_mode = 1
+
+[node name="EndScreen" parent="." instance=ExtResource("2_hc5tb")]
+visible = false
+layout_mode = 1
+
+[node name="InformationScreen" parent="." instance=ExtResource("3_flov8")]
+visible = false
+layout_mode = 1
+
+[node name="ButtonsControls" parent="." instance=ExtResource("4_kkoo0")]
+layout_mode = 1

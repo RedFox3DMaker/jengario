@@ -1,0 +1,103 @@
+[gd_scene load_steps=3 format=3 uid="uid://roiim6gaiwag"]
+
+[ext_resource type="Script" path="res://scripts/buttons_controls.gd" id="1_42n8n"]
+[ext_resource type="FontFile" uid="uid://b4qtwint4cvqk" path="res://assets/fonts/TmonMonsori.ttf.ttf" id="1_hclg2"]
+
+[node name="ButtonsControls" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_42n8n")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/margin_left = 475
+theme_override_constants/margin_top = 400
+
+[node name="Buttons" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+metadata/_edit_use_anchors_ = true
+
+[node name="StartButton" type="Button" parent="MarginContainer/Buttons"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_hclg2")
+theme_override_font_sizes/font_size = 40
+text = "START"
+
+[node name="SettingsButton" type="Button" parent="MarginContainer/Buttons"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_hclg2")
+theme_override_font_sizes/font_size = 40
+text = "SETTINGS"
+
+[node name="ExitButton" type="Button" parent="MarginContainer/Buttons"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_hclg2")
+theme_override_font_sizes/font_size = 40
+text = "EXIT"
+
+[node name="AcceptDialog" type="AcceptDialog" parent="."]
+auto_translate_mode = 1
+title = "Settings"
+initial_position = 1
+size = Vector2i(325, 170)
+unresizable = true
+
+[node name="Control" type="Control" parent="AcceptDialog"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 317.0
+offset_bottom = 121.0
+
+[node name="GridContainer" type="GridContainer" parent="AcceptDialog/Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -96.0
+offset_top = -41.0
+offset_right = 96.0
+offset_bottom = 41.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/v_separation = 20
+columns = 2
+
+[node name="NbTowerLabel" type="Label" parent="AcceptDialog/Control/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+text = "Tower levels: "
+metadata/_edit_use_anchors_ = true
+
+[node name="NbTowerValue" type="SpinBox" parent="AcceptDialog/Control/GridContainer"]
+layout_mode = 2
+min_value = 6.0
+max_value = 10.0
+value = 6.0
+
+[node name="NbPlayersLabel" type="Label" parent="AcceptDialog/Control/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+text = "Players: "
+metadata/_edit_use_anchors_ = true
+
+[node name="NbPlayersValue" type="SpinBox" parent="AcceptDialog/Control/GridContainer"]
+layout_mode = 2
+min_value = 1.0
+max_value = 4.0
+value = 4.0
+
+[connection signal="pressed" from="MarginContainer/Buttons/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="MarginContainer/Buttons/SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="pressed" from="MarginContainer/Buttons/ExitButton" to="." method="_on_exit_button_pressed"]
+[connection signal="confirmed" from="AcceptDialog" to="." method="_on_accept_dialog_confirmed"]
