@@ -3,5 +3,7 @@
 [ext_resource type="FontFile" uid="uid://jpp5u1lmawf1" path="res://assets/fonts/Adventure.otf" id="1_l77ux"]
 
 [resource]
+resource_local_to_scene = true
 font = ExtResource("1_l77ux")
-font_size = 70
+font_size = 50
+outline_color = Color(0, 0, 0, 1)

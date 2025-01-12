@@ -1,12 +1,25 @@
-[gd_scene load_steps=6 format=3 uid="uid://cq3mp6s63imeu"]
+[gd_scene load_steps=11 format=3 uid="uid://cq3mp6s63imeu"]
 
-[ext_resource type="FontFile" uid="uid://b4qtwint4cvqk" path="res://assets/fonts/TmonMonsori.ttf.ttf" id="1_sqy2h"]
 [ext_resource type="Script" path="res://scripts/end_screen.gd" id="1_x0egx"]
-[ext_resource type="Texture2D" uid="uid://d2r57ajapjotf" path="res://assets/ux/banners.png" id="3_8llxl"]
+[ext_resource type="Material" uid="uid://bcgrj03nqi6vm" path="res://assets/particles/rain_particle_material.tres" id="2_luvro"]
+[ext_resource type="SpriteFrames" uid="uid://bu60ol1f463if" path="res://assets/sprites/playerAnim.tres" id="3_3e11n"]
+[ext_resource type="Material" uid="uid://cphmyardyapvt" path="res://assets/particles/confetti_particle_material.tres" id="4_kfywh"]
 [ext_resource type="LabelSettings" uid="uid://cujr0d5coh8ba" path="res://assets/fonts/label_settings_end_banner.tres" id="4_qnv7k"]
+[ext_resource type="Texture2D" uid="uid://bdicmjxv6yyyh" path="res://assets/particles/rain.png" id="5_22nph"]
+[ext_resource type="Texture2D" uid="uid://c2r332gx86lqp" path="res://assets/particles/win.png" id="5_h60p7"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_bs330"]
-atlas = ExtResource("3_8llxl")
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_mxdo6"]
+resource_local_to_scene = true
+load_path = "res://.godot/imported/banners.png-41b75960cd1335f02f9a2365f8b4294c.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_evw77"]
+resource_local_to_scene = true
+atlas = SubResource("CompressedTexture2D_mxdo6")
+region = Rect2(47, 68, 389, 120)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rjv6m"]
+resource_local_to_scene = true
+atlas = SubResource("CompressedTexture2D_mxdo6")
 region = Rect2(47, 230, 389, 120)
 
 [node name="EndScreen" type="Control"]
@@ -18,47 +31,101 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_x0egx")
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="Background" type="ColorRect" parent="."]
 layout_mode = 0
 offset_right = 1152.0
 offset_bottom = 648.0
 color = Color(0, 0, 0, 0.396078)
 
-[node name="RestartButton" type="Button" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 0
-offset_left = 480.0
-offset_top = 408.0
-offset_right = 677.0
-offset_bottom = 466.0
-theme_override_fonts/font = ExtResource("1_sqy2h")
-theme_override_font_sizes/font_size = 40
-text = "RESTART"
+offset_right = 928.0
+offset_bottom = 120.0
+theme_override_constants/margin_left = 110
+theme_override_constants/margin_top = 50
 
-[node name="ExitButton" type="Button" parent="."]
-layout_mode = 0
-offset_left = 480.0
-offset_top = 496.0
-offset_right = 677.0
-offset_bottom = 554.0
-theme_override_fonts/font = ExtResource("1_sqy2h")
-theme_override_font_sizes/font_size = 40
-text = "EXIT"
+[node name="Banners" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 150
+alignment = 1
 
-[node name="GameOverBanner" type="TextureRect" parent="."]
-layout_mode = 0
-offset_left = 384.0
-offset_top = 168.0
-offset_right = 773.0
-offset_bottom = 288.0
-texture = SubResource("AtlasTexture_bs330")
+[node name="VictoryBanner" type="TextureRect" parent="MarginContainer/Banners"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_evw77")
 
-[node name="Label" type="Label" parent="GameOverBanner"]
-layout_mode = 0
-offset_left = 104.0
-offset_right = 281.0
+[node name="Label" type="Label" parent="MarginContainer/Banners/VictoryBanner"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -116.0
+offset_right = 116.0
 offset_bottom = 90.0
-text = "Defeat"
+grow_horizontal = 2
+text = "Victory"
 label_settings = ExtResource("4_qnv7k")
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[connection signal="pressed" from="RestartButton" to="." method="_on_restart_button_pressed"]
-[connection signal="pressed" from="ExitButton" to="." method="_on_exit_button_pressed"]
+[node name="DefeatBanner" type="TextureRect" parent="MarginContainer/Banners"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_rjv6m")
+
+[node name="Label" type="Label" parent="MarginContainer/Banners/DefeatBanner"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -88.5
+offset_right = 88.5
+offset_bottom = 90.0
+grow_horizontal = 2
+text = " Defeat"
+label_settings = ExtResource("4_qnv7k")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ConfettiParticles" type="GPUParticles2D" parent="."]
+position = Vector2(288, 0)
+emitting = false
+amount = 20
+process_material = ExtResource("4_kfywh")
+texture = ExtResource("5_h60p7")
+lifetime = 7.0
+speed_scale = 2.0
+explosiveness = 1.0
+randomness = 0.36
+visibility_rect = Rect2(-288, 0, 576, 648)
+
+[node name="RainParticles" type="GPUParticles2D" parent="."]
+position = Vector2(864, 0)
+emitting = false
+amount = 100
+process_material = ExtResource("2_luvro")
+texture = ExtResource("5_22nph")
+lifetime = 4.0
+randomness = 0.36
+visibility_rect = Rect2(-288, 0, 576, 648)
+
+[node name="WinnerPlayer" type="AnimatedSprite2D" parent="."]
+position = Vector2(320, 328)
+sprite_frames = ExtResource("3_3e11n")
+animation = &"Boy"
+
+[node name="LooserPlayer1" type="AnimatedSprite2D" parent="."]
+position = Vector2(720, 328)
+sprite_frames = ExtResource("3_3e11n")
+animation = &"Girl"
+flip_h = true
+
+[node name="LooserPlayer2" type="AnimatedSprite2D" parent="."]
+position = Vector2(840, 320)
+sprite_frames = ExtResource("3_3e11n")
+animation = &"Monster"
+flip_h = true
+
+[node name="LooserPlayer3" type="AnimatedSprite2D" parent="."]
+position = Vector2(952, 326)
+sprite_frames = ExtResource("3_3e11n")
+animation = &"Zombie"
+flip_h = true

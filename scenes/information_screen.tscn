@@ -1,0 +1,104 @@
+[gd_scene load_steps=8 format=3 uid="uid://ccc4m4pk8vr23"]
+
+[ext_resource type="LabelSettings" uid="uid://cujr0d5coh8ba" path="res://assets/fonts/label_settings_end_banner.tres" id="1_43v3n"]
+[ext_resource type="Script" path="res://scripts/information_screen.gd" id="1_anc02"]
+[ext_resource type="FontFile" uid="uid://jpp5u1lmawf1" path="res://assets/fonts/Adventure.otf" id="2_yequh"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_fmxy5"]
+resource_local_to_scene = true
+font = ExtResource("2_yequh")
+font_size = 50
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_o77kc"]
+resource_local_to_scene = true
+font = ExtResource("2_yequh")
+font_size = 50
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_13t78"]
+resource_local_to_scene = true
+font = ExtResource("2_yequh")
+font_size = 50
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_bwicv"]
+resource_local_to_scene = true
+font = ExtResource("2_yequh")
+font_size = 50
+outline_color = Color(0, 0, 0, 1)
+
+[node name="InformationScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_anc02")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+
+[node name="PlayersInfo" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="PlayerInfoItem1" type="HBoxContainer" parent="MarginContainer/PlayersInfo"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="PlayerLabel" type="Label" parent="MarginContainer/PlayersInfo/PlayerInfoItem1"]
+layout_mode = 2
+text = "Player  1:"
+label_settings = SubResource("LabelSettings_fmxy5")
+
+[node name="PlayerScore" type="Label" parent="MarginContainer/PlayersInfo/PlayerInfoItem1"]
+layout_mode = 2
+text = "0"
+label_settings = ExtResource("1_43v3n")
+
+[node name="PlayerInfoItem2" type="HBoxContainer" parent="MarginContainer/PlayersInfo"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="PlayerLabel" type="Label" parent="MarginContainer/PlayersInfo/PlayerInfoItem2"]
+layout_mode = 2
+text = "Player 2:"
+label_settings = SubResource("LabelSettings_o77kc")
+
+[node name="PlayerScore" type="Label" parent="MarginContainer/PlayersInfo/PlayerInfoItem2"]
+layout_mode = 2
+text = "0"
+label_settings = ExtResource("1_43v3n")
+
+[node name="PlayerInfoItem3" type="HBoxContainer" parent="MarginContainer/PlayersInfo"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="PlayerLabel" type="Label" parent="MarginContainer/PlayersInfo/PlayerInfoItem3"]
+layout_mode = 2
+text = "Player 3:"
+label_settings = SubResource("LabelSettings_13t78")
+
+[node name="PlayerScore" type="Label" parent="MarginContainer/PlayersInfo/PlayerInfoItem3"]
+layout_mode = 2
+text = "0"
+label_settings = ExtResource("1_43v3n")
+
+[node name="PlayerInfoItem4" type="HBoxContainer" parent="MarginContainer/PlayersInfo"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="PlayerLabel" type="Label" parent="MarginContainer/PlayersInfo/PlayerInfoItem4"]
+layout_mode = 2
+text = "Player 4:"
+label_settings = SubResource("LabelSettings_bwicv")
+
+[node name="PlayerScore" type="Label" parent="MarginContainer/PlayersInfo/PlayerInfoItem4"]
+layout_mode = 2
+text = "0"
+label_settings = ExtResource("1_43v3n")

@@ -11,8 +11,7 @@ var mouse_cursor: Array[Resource] = [
 var nb_stacks: int = 5
 
 
-@onready var start_screen: StartScreen = $StartScreen
-@onready var end_screen: EndScreen = $EndScreen
+@onready var hud: HUD = $HUD
 @onready var level: Level = $Level
 @onready var music_player: AudioStreamPlayer = $MusicPlayer
 
@@ -26,6 +25,7 @@ func _set_current_player(index: int) -> void:
 	"""
 	self.current_player = wrapi(index, 0, 4)
 	Input.set_custom_mouse_cursor(self.mouse_cursor[self.current_player])
+	self.hud.information_screen.set_player(self.current_player)
 
 
 func _ready() -> void:
@@ -33,55 +33,57 @@ func _ready() -> void:
 	Called when scene has been added to the tree.
 	"""
 	self.play_music("res://assets/sounds/menu song mdj.mp3")
+	
+	# connect start and exit buttons
+	self.hud.buttons_controls.start_game.connect(self._on_buttons_controls_start_game)
+	self.hud.buttons_controls.exit_game.connect(self._on_buttons_controls_exit_game)
+	
+	# connect players update_score
+	for player: Player in self.level.players:
+		player.update_score.connect(self._on_player_update_score)
 
 
-func _on_start_screen_start_game(nb_stacks_settings: int) -> void:
+func _on_buttons_controls_start_game(nb_stacks_settings: int) -> void:
 	"""
 	Called after a click on the Start Screen start button.
 	Hides the Start Screen, show the level, and build the tower.
 	"""
+	# clean the old tower
+	if self.level.tower:
+		self.level.tower.remove_bricks()
+	
+	# create the tower
 	self.nb_stacks = nb_stacks_settings
-	self.start_screen.hide()
 	self.level.build_tower(self.nb_stacks)
-	self.level.show()
 	self.level.unfreeze_tower()
+	self.level.show_players(true)
 	self.connect_brick_dropped()
+	
+	# show the level
+	self.hud.show_game_screen()
+	
 	self._set_current_player(0)
+	self.hud.information_screen.reset_players_score()
+	self.hud.information_screen.set_player(0)
+	
 	self.play_music("res://assets/sounds/mdj gameplay.mp3")
 
 
-func _on_end_screen_exit_game() -> void:
+func _on_buttons_controls_exit_game() -> void:
 	"""
 	Quit the game on End Screen Exit button click.
 	"""
 	get_tree().quit()
 
 
-func _on_end_screen_restart_game() -> void:
-	"""
-	Restart the game on End Screen Restart button click.
-	Detroy the old levels and recreate it. TO BE CHANGED FOR NEW TOWER BUILDING.
-	"""
-	self.end_screen.hide()
-	self.level.tower.remove_bricks()
-	self.level.queue_free()
-
-	self.level = level_scene.instantiate()
-	self.level.connect("game_over", _on_level_game_over)
-	self.add_child(level)
-	self.move_child(level, 0)
-	self.level.build_tower(self.nb_stacks)
-	self.play_music("res://assets/sounds/mdj gameplay.mp3")
-	self.level.unfreeze_tower()
-	self.connect_brick_dropped()
-	self._set_current_player(0)
-
-
 func _on_level_game_over() -> void:
 	"""
 	Show the End Screen on Game Over.
 	"""
-	self.end_screen.show()
+	var winner_index = self.hud.get_winner_index()
+	var winner_player: Player = self.level.players[winner_index]
+	self.hud.show_end_screen(winner_player.sprite.animation)
+	self.level.show_players(false)
 	Input.set_custom_mouse_cursor(null)
 	self.play_music("res://assets/sounds/Victory and ending song.mp3")
 
@@ -111,7 +113,17 @@ func connect_brick_dropped() -> void:
 func _on_brick_dropped() -> void:
 	"""
 	Update the current player when the Brick dropped signal is received, only if
-	the End Screen is not shown. 
+	the End Screen is not shown.
 	"""
-	if not self.end_screen.visible:
+	if not self.hud.end_screen.visible:
+		self._set_current_player(self.current_player + 1)
+		
+
+func _on_player_update_score(player: Player) -> void:
+	"""
+	update the player score
+	"""
+	var player_num = int(player.name.split(" ")[1]) -1
+	self.hud.information_screen.update_player_score(player_num)
+	if not self.hud.end_screen.visible:
 		self._set_current_player(self.current_player + 1)
