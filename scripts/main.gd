@@ -9,8 +9,6 @@ var mouse_cursor: Array[Resource] = [
 	load("res://assets/ux/cursor_4.png")
 	]
 var nb_stacks: int = 5
-var buttons_controls: ButtonsControls
-var information_screen: InformationScreen
 
 
 @onready var hud: HUD = $HUD
@@ -27,7 +25,7 @@ func _set_current_player(index: int) -> void:
 	"""
 	self.current_player = wrapi(index, 0, 4)
 	Input.set_custom_mouse_cursor(self.mouse_cursor[self.current_player])
-	self.information_screen.set_player(self.current_player + 1)
+	self.hud.information_screen.set_player(self.current_player)
 
 
 func _ready() -> void:
@@ -35,11 +33,14 @@ func _ready() -> void:
 	Called when scene has been added to the tree.
 	"""
 	self.play_music("res://assets/sounds/menu song mdj.mp3")
-	self.information_screen = hud.get_information_screen()
 	
-	self.buttons_controls = hud.get_buttons_controls()
-	self.buttons_controls.start_game.connect(self._on_buttons_controls_start_game)
-	self.buttons_controls.exit_game.connect(self._on_buttons_controls_exit_game)
+	# connect start and exit buttons
+	self.hud.buttons_controls.start_game.connect(self._on_buttons_controls_start_game)
+	self.hud.buttons_controls.exit_game.connect(self._on_buttons_controls_exit_game)
+	
+	# connect players update_score
+	for player: Player in self.level.players:
+		player.update_score.connect(self._on_player_update_score)
 
 
 func _on_buttons_controls_start_game(nb_stacks_settings: int) -> void:
@@ -55,13 +56,15 @@ func _on_buttons_controls_start_game(nb_stacks_settings: int) -> void:
 	self.nb_stacks = nb_stacks_settings
 	self.level.build_tower(self.nb_stacks)
 	self.level.unfreeze_tower()
+	self.level.show_players(true)
 	self.connect_brick_dropped()
 	
 	# show the level
 	self.hud.show_game_screen()
 	
 	self._set_current_player(0)
-	self.information_screen.set_player(1)
+	self.hud.information_screen.reset_players_score()
+	self.hud.information_screen.set_player(0)
 	
 	self.play_music("res://assets/sounds/mdj gameplay.mp3")
 
@@ -77,7 +80,10 @@ func _on_level_game_over() -> void:
 	"""
 	Show the End Screen on Game Over.
 	"""
-	self.hud.show_end_screen()
+	var winner_index = self.hud.get_winner_index()
+	var winner_player: Player = self.level.players[winner_index]
+	self.hud.show_end_screen(winner_player.sprite.animation)
+	self.level.show_players(false)
 	Input.set_custom_mouse_cursor(null)
 	self.play_music("res://assets/sounds/Victory and ending song.mp3")
 
@@ -109,5 +115,15 @@ func _on_brick_dropped() -> void:
 	Update the current player when the Brick dropped signal is received, only if
 	the End Screen is not shown.
 	"""
+	if not self.hud.end_screen.visible:
+		self._set_current_player(self.current_player + 1)
+		
+
+func _on_player_update_score(player: Player) -> void:
+	"""
+	update the player score
+	"""
+	var player_num = int(player.name.split(" ")[1]) -1
+	self.hud.information_screen.update_player_score(player_num)
 	if not self.hud.end_screen.visible:
 		self._set_current_player(self.current_player + 1)

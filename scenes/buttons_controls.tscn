@@ -1,7 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://roiim6gaiwag"]
+[gd_scene load_steps=4 format=3 uid="uid://roiim6gaiwag"]
 
 [ext_resource type="Script" path="res://scripts/buttons_controls.gd" id="1_42n8n"]
 [ext_resource type="FontFile" uid="uid://b4qtwint4cvqk" path="res://assets/fonts/TmonMonsori.ttf.ttf" id="1_hclg2"]
+
+[sub_resource type="Theme" id="Theme_drg18"]
+AcceptDialog/fonts/title_font = ExtResource("1_hclg2")
+Button/fonts/font = ExtResource("1_hclg2")
+Label/fonts/font = ExtResource("1_hclg2")
+SpinBox/fonts/font = ExtResource("1_hclg2")
 
 [node name="ButtonsControls" type="Control"]
 layout_mode = 3
@@ -27,19 +33,19 @@ metadata/_edit_use_anchors_ = true
 [node name="StartButton" type="Button" parent="MarginContainer/Buttons"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_hclg2")
-theme_override_font_sizes/font_size = 40
+theme_override_font_sizes/font_size = 35
 text = "START"
 
 [node name="SettingsButton" type="Button" parent="MarginContainer/Buttons"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_hclg2")
-theme_override_font_sizes/font_size = 40
+theme_override_font_sizes/font_size = 35
 text = "SETTINGS"
 
 [node name="ExitButton" type="Button" parent="MarginContainer/Buttons"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_hclg2")
-theme_override_font_sizes/font_size = 40
+theme_override_font_sizes/font_size = 35
 text = "EXIT"
 
 [node name="AcceptDialog" type="AcceptDialog" parent="."]
@@ -48,6 +54,7 @@ title = "Settings"
 initial_position = 1
 size = Vector2i(325, 170)
 unresizable = true
+theme = SubResource("Theme_drg18")
 
 [node name="Control" type="Control" parent="AcceptDialog"]
 layout_mode = 3
@@ -55,7 +62,7 @@ anchors_preset = 0
 offset_left = 8.0
 offset_top = 8.0
 offset_right = 317.0
-offset_bottom = 121.0
+offset_bottom = 123.0
 
 [node name="GridContainer" type="GridContainer" parent="AcceptDialog/Control"]
 layout_mode = 1

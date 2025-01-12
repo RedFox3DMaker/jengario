@@ -23,17 +23,29 @@ func show_game_screen() -> void:
 	self.information_screen.show()
 	self.buttons_controls.hide()
 
+	# start vfx
+	self.end_screen.stop_animations()
 
-func show_end_screen() -> void:
+
+func show_end_screen(winner_player: StringName) -> void:
 	self.start_screen.hide()
 	self.end_screen.show()
 	self.buttons_controls.show()
 	self.information_screen.hide()
-	
 
-func get_buttons_controls() -> ButtonsControls:
-	return self.buttons_controls
-	
-	
-func get_information_screen() -> InformationScreen:
-	return self.information_screen
+	self.end_screen.set_winner(winner_player)
+
+	# start vfx
+	self.end_screen.start_animations()
+
+
+func get_winner_index() -> int:
+# indication who is the winner
+	var winner_index = 0
+	var max_score = 0
+	for index in range(len(self.information_screen.players_score)):
+		var score = int(self.information_screen.players_score[index].text)
+		if max_score < score:
+			max_score = score
+			winner_index = index
+	return winner_index

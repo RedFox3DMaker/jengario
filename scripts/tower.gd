@@ -169,7 +169,6 @@ func is_collasping() -> bool:
 		center_x /= levels_centers.size()
 
 		if level_below_x_left > center_x  or center_x > level_below_x_right:
-			print("collapsing")
 			collapsing = true
 			break
 
