@@ -98,6 +98,7 @@ input_pickable = true
 mass = 0.02
 physics_material_override = ExtResource("1_yj2e7")
 freeze_mode = 1
+contact_monitor = true
 max_contacts_reported = 1
 script = ExtResource("1_yqdgc")
 
@@ -114,4 +115,5 @@ visible = false
 sprite_frames = SubResource("SpriteFrames_0couu")
 animation = &"square_explosion"
 
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="animation_finished" from="ExplosionAnimation" to="." method="_on_explosion_animation_animation_finished"]

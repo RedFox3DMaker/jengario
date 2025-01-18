@@ -21,16 +21,16 @@ func start_animations() -> void:
 func stop_animations() -> void:
 	confetti.emitting = false
 	rain.emitting = false
-	
 
-func set_winner(winner: StringName):
+
+func set_winner(winner: StringName, nb_players: int) -> void:
 	var loosers: Array[StringName] = [&"Boy", &"Zombie", &"Girl", &"Monster"]
 	loosers.erase(winner)
-	
+
 	self.winner_player.animation = winner
-	
+
 	for index in range(len(loosers)):
 		var looser_anim = loosers[index]
 		var looser_player = looser_players[index]
 		looser_player.animation = looser_anim
-	
+		looser_player.visible = index < nb_players - 1

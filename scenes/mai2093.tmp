@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=3 uid="uid://xn7rklcn0ehf"]
+
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_5v4ly"]
+[ext_resource type="PackedScene" uid="uid://dbhae44gmn1qh" path="res://scenes/level.tscn" id="3_q73ux"]
+[ext_resource type="AudioStream" uid="uid://dymd2gha7fujk" path="res://assets/sounds/click sfx.mp3" id="5_8li46"]
+[ext_resource type="PackedScene" uid="uid://bm3oldggrccl6" path="res://scenes/hud.tscn" id="7_uovd3"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_5v4ly")
+level_scene = ExtResource("3_q73ux")
+
+[node name="Level" parent="." instance=ExtResource("3_q73ux")]
+
+[node name="HUD" parent="." instance=ExtResource("7_uovd3")]
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_8li46")
+
+[connection signal="game_over" from="Level" to="." method="_on_level_game_over"]
