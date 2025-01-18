@@ -4,6 +4,7 @@ extends Node2D
 class_name Tower
 
 
+var _brick_fallen_on_floor = false
 var held_brick: Brick = null
 var nb_stacks: int = 6
 var _start_with_squares = true
@@ -17,6 +18,7 @@ func build(nb_stacks_required: int) -> void:
 	Builds the tower. Create an alternation of square and rectangle blocks.
 	Holds them in stacks.
 	"""
+	self._brick_fallen_on_floor = false
 	self.nb_stacks = nb_stacks_required
 	# remove old blocks
 	for old_brick: Brick in get_tree().get_nodes_in_group("bricks"):
@@ -37,7 +39,7 @@ func build(nb_stacks_required: int) -> void:
 
 func connect_brick_callbacks(brick_node: Brick) -> void:
 	brick_node.clicked.connect(self._on_brick_clicked)
-
+	brick_node.touched_ground.connect(self._on_brick_touched_ground)
 
 # create a level with 3 square brick
 # return the new elevation of the tower
@@ -105,6 +107,10 @@ func _on_brick_clicked(brick: Brick) -> void:
 	if !held_brick:
 		brick.pickup()
 		held_brick = brick
+		
+		
+func _on_brick_touched_ground() -> void:
+	self._brick_fallen_on_floor = true
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -136,6 +142,10 @@ func is_collasping() -> bool:
 	of all the bouding boxes.
 	If the center x coordinate is not between them, the tower is collapsing
 	"""
+	# check first there is no brick on the floor
+	if self._brick_fallen_on_floor: return true
+	
+	# compute if the tower is about to collapse
 	var collapsing = false
 	# from top level to down
 	var levels_centers: Array[float] = []
