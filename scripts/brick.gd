@@ -140,5 +140,5 @@ func get_rect() -> Rect2:
 
 
 func _on_body_entered(body: Node) -> void:
-	if body as TileMapLayer and not is_in_group("level0"):
+	if not held and (body as TileMapLayer) and not is_in_group("level0"):
 		self.touched_ground.emit()

@@ -9,16 +9,18 @@ signal game_over
 
 var tower_falling_played = false
 var tower: Tower = null
+var players: Array[Player] = []
 
 
 @export var tower_scene: PackedScene
+@export var player_scene: PackedScene
 
 
-@onready var players: Array[Player] = [
-	$"Players/Player 1",
-	$"Players/Player 2",
-	$"Players/Player 3",
-	$"Players/Player 4"
+@onready var players_origins: Array[Marker2D] = [
+	$"PlayersOrigins/Player1Origin",
+	$"PlayersOrigins/Player2Origin",
+	$"PlayersOrigins/Player3Origin",
+	$"PlayersOrigins/Player4Origin"
 ]
 @onready var tower_origin: Marker2D = $TowerOrigin
 
@@ -29,15 +31,34 @@ func build_tower(nb_stacks: int) -> void:
 	self.add_child(self.tower)
 	self.tower.build(nb_stacks)
 	self.tower_falling_played = false
+	
+	
+func build_players(nb_players: int) -> void:
+	for index in range(nb_players):
+		var player = self.player_scene.instantiate()
+		match index:
+			0:
+				player.variant = Player.PlayerVariantType.BOY
+			1:
+				player.variant = Player.PlayerVariantType.ZOMBIE
+			2:
+				player.variant = Player.PlayerVariantType.GIRL
+			3:
+				player.variant = Player.PlayerVariantType.MONSTER
+				
+		player.position = self.players_origins[index].position
+		self.add_child(player)
+		self.players.append(player)
 
 
 func unfreeze_tower() -> void:
 	get_tree().set_group("bricks", "freeze", false)
 	
 	
-func show_players(i_show: bool) -> void:
-	for player in players:
-		player.visible = i_show
+func remove_players() -> void:
+	for player in self.players:
+		player.queue_free()
+	self.players.clear()
 
 
 func _physics_process(_delta: float) -> void:

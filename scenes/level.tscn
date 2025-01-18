@@ -9,6 +9,7 @@
 [node name="Level" type="Node2D"]
 script = ExtResource("1_66p50")
 tower_scene = ExtResource("2_3vaul")
+player_scene = ExtResource("6_hjt0i")
 
 [node name="Background" type="TextureRect" parent="."]
 offset_right = 1152.0
@@ -19,22 +20,19 @@ texture = ExtResource("1_k4oli")
 tile_map_data = PackedByteArray("AAAAAAYAAAAAAAAAAAABAAYAAAAAAAAAAAACAAYAAAAAAAAAAAADAAYAAAAAAAAAAAAEAAYAAAAAAAAAAAAFAAYAAAAAAAAAAAALAAYAAAAAAAAAAAAGAAYAAAAAAAAAAAAHAAYAAAAAAAAAAAAIAAYAAAAAAAAAAAAJAAYAAAAAAAAAAAAKAAYAAAAAAAAAAAA=")
 tile_set = ExtResource("2_a7qj7")
 
-[node name="Players" type="CanvasGroup" parent="."]
+[node name="PlayersOrigins" type="CanvasGroup" parent="."]
 
-[node name="Player 1" parent="Players" instance=ExtResource("6_hjt0i")]
+[node name="Player1Origin" type="Marker2D" parent="PlayersOrigins"]
 position = Vector2(343, 551)
 
-[node name="Player 2" parent="Players" instance=ExtResource("6_hjt0i")]
-position = Vector2(181, 551)
-variant = 1
-
-[node name="Player 3" parent="Players" instance=ExtResource("6_hjt0i")]
+[node name="Player2Origin" type="Marker2D" parent="PlayersOrigins"]
 position = Vector2(742, 551)
-variant = 2
 
-[node name="Player 4" parent="Players" instance=ExtResource("6_hjt0i")]
+[node name="Player3Origin" type="Marker2D" parent="PlayersOrigins"]
+position = Vector2(181, 551)
+
+[node name="Player4Origin" type="Marker2D" parent="PlayersOrigins"]
 position = Vector2(905, 551)
-variant = 3
 
 [node name="TowerOrigin" type="Marker2D" parent="."]
 position = Vector2(494, 552)

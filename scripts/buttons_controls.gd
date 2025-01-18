@@ -21,7 +21,7 @@ func _ready() -> void:
 
 
 func _on_start_button_pressed() -> void:
-	self.start_game.emit(self.nb_stacks)
+	self.start_game.emit(self.nb_stacks, self.nb_players)
 	$MarginContainer/Buttons/StartButton.text = "RESTART"
 
 

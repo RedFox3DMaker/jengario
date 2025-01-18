@@ -33,7 +33,7 @@ func show_end_screen(winner_player: StringName) -> void:
 	self.buttons_controls.show()
 	self.information_screen.hide()
 
-	self.end_screen.set_winner(winner_player)
+	self.end_screen.set_winner(winner_player, self.buttons_controls.nb_players)
 
 	# start vfx
 	self.end_screen.start_animations()

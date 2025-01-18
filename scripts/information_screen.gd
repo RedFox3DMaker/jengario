@@ -17,6 +17,15 @@ class_name InformationScreen
 ]
 
 
+func show_players_scores(nb_players):
+	for index in range(len(players_label)):
+		var player_label: Label = players_label[index]
+		var player_score: Label = players_score[index]
+		var show_label = index < nb_players
+		player_label.visible = show_label
+		player_score.visible = show_label
+
+
 func set_player(number: int) -> void:
 	for index in range(len(players_label)):
 		var player_label: Label = players_label[index]

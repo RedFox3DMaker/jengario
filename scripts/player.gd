@@ -33,12 +33,12 @@ func _ready() -> void:
 			label = "2P"
 			player_indicator.texture.region = Rect2(662, 0, 293, 248)
 			color_tone = Color.LIME_GREEN
+			flip = true
 		PlayerVariantType.GIRL:
 			anim = &"Girl"
 			label = "3P"
 			player_indicator.texture.region = Rect2(331, 0, 293, 248)
 			color_tone = Color.DARK_ORANGE
-			flip = true
 		PlayerVariantType.MONSTER:
 			anim = &"Monster"
 			label = "4P"
