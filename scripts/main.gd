@@ -16,9 +16,9 @@ var mouse_cursor_drag: Array[Resource] = [
 	]
 var mouse_cursor_hotspot: Array[Vector2] = [
 	Vector2(15,8),
-	Vector2(32,13),
+	Vector2(19,9),
 	Vector2(34,42),
-	Vector2(26,9),
+	Vector2(14,4),
 ]
 var nb_stacks: int = 5
 var nb_players: int = 4
