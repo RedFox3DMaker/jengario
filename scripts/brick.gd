@@ -89,7 +89,7 @@ func _physics_process(delta: float) -> void:
 		self.explosion_animation.play()
 	elif self.held:
 		# check if there is a brick above...
-		const TEST_SPEED = 10
+		const TEST_SPEED = 250
 		var is_contact_up = self.test_move(self.transform, Vector2.UP * delta * TEST_SPEED)
 		var is_contact_down = false
 
