@@ -106,7 +106,7 @@ func _on_level_game_over() -> void:
 	"""
 	Show the End Screen on Game Over.
 	"""
-	var winner_index = self.hud.get_winner_index()
+	var winner_index = self.hud.get_winner_index(self.current_player)
 	var winner_player: Player = self.level.players[winner_index]
 	self.hud.show_end_screen(winner_player.sprite.animation)
 	self.level.remove_players()
