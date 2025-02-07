@@ -9,8 +9,8 @@ signal dropped
 signal touched_ground
 
 
-const MAX_VELOCITY: float = 25.0
-const MAX_APPLIED_FORCE: float = 100.0
+const MAX_VELOCITY: float = 50.0
+const MAX_APPLIED_FORCE: float = 250.0
 var previous_velocity: Vector2 = Vector2.ZERO
 var sound_played = false
 var held = false
