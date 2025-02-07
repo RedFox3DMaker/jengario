@@ -16,9 +16,9 @@ var mouse_cursor_drag: Array[Resource] = [
 	]
 var mouse_cursor_hotspot: Array[Vector2] = [
 	Vector2(15,8),
-	Vector2(32,13),
+	Vector2(19,9),
 	Vector2(34,42),
-	Vector2(26,9),
+	Vector2(14,4),
 ]
 var nb_stacks: int = 5
 var nb_players: int = 4
@@ -37,11 +37,13 @@ func _set_current_player(index: int) -> void:
 	Switch current player turn and change mouse cursors.
 	"""
 	self.current_player = wrapi(index, 0, self.nb_players)
-	Input.set_custom_mouse_cursor(self.mouse_cursor[self.current_player], Input.CURSOR_ARROW, self.mouse_cursor_hotspot[self.current_player])
 	self.hud.information_screen.set_player(self.current_player)
+	Input.set_custom_mouse_cursor(self.mouse_cursor[self.current_player], Input.CURSOR_ARROW, self.mouse_cursor_hotspot[self.current_player])
 
 
 func _input(event: InputEvent) -> void:
+	# do not change cursor when button controls is shown
+	if self.hud.buttons_controls.visible: return
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		if event.pressed:
 			Input.set_custom_mouse_cursor(self.mouse_cursor_drag[self.current_player], Input.CURSOR_ARROW, self.mouse_cursor_hotspot[self.current_player])
@@ -54,7 +56,7 @@ func _ready() -> void:
 	"""
 	Called when scene has been added to the tree.
 	"""
-	self.play_music("res://assets/sounds/menu song mdj.mp3")
+	self.play_music("res://assets/sounds/menu song mdj.mp3", true)
 
 	# connect start and exit buttons
 	self.hud.buttons_controls.start_game.connect(self._on_buttons_controls_start_game)
@@ -90,7 +92,7 @@ func _on_buttons_controls_start_game(nb_stacks_settings: int, nb_players_setting
 	self.hud.information_screen.reset_players_score()
 	self.hud.information_screen.set_player(0)
 
-	self.play_music("res://assets/sounds/mdj gameplay.mp3")
+	self.play_music("res://assets/sounds/mdj gameplay.mp3", true)
 
 
 func _on_buttons_controls_exit_game() -> void:
@@ -104,15 +106,15 @@ func _on_level_game_over() -> void:
 	"""
 	Show the End Screen on Game Over.
 	"""
-	var winner_index = self.hud.get_winner_index()
+	var winner_index = self.hud.get_winner_index(self.current_player)
 	var winner_player: Player = self.level.players[winner_index]
 	self.hud.show_end_screen(winner_player.sprite.animation)
 	self.level.remove_players()
 	Input.set_custom_mouse_cursor(null)
-	self.play_music("res://assets/sounds/Victory and ending song.mp3")
+	self.play_music("res://assets/sounds/Victory and ending song.mp3", false, -6)
 
 
-func play_music(sound_path: String):
+func play_music(sound_path: String, loop=false, volume=0):
 	"""
 	Change the current music playing.
 	"""
@@ -124,6 +126,8 @@ func play_music(sound_path: String):
 
 	self.music_player.stream = load(sound_path)
 	self.music_player.play()
+	self.music_player.stream.loop = loop
+	self.music_player.volume_db = volume
 
 
 func connect_brick_dropped() -> void:

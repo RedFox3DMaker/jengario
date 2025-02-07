@@ -39,11 +39,12 @@ func show_end_screen(winner_player: StringName) -> void:
 	self.end_screen.start_animations()
 
 
-func get_winner_index() -> int:
-# indication who is the winner
+func get_winner_index(player_causing_game_over: int) -> int:
+	# indicate who is the winner
 	var winner_index = 0
-	var max_score = 0
+	var max_score = -1
 	for index in range(len(self.information_screen.players_score)):
+		if index == player_causing_game_over: continue
 		var score = int(self.information_screen.players_score[index].text)
 		if max_score < score:
 			max_score = score

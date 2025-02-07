@@ -89,7 +89,7 @@ func _physics_process(delta: float) -> void:
 		self.explosion_animation.play()
 	elif self.held:
 		# check if there is a brick above...
-		const TEST_SPEED = 10
+		const TEST_SPEED = 250
 		var is_contact_up = self.test_move(self.transform, Vector2.UP * delta * TEST_SPEED)
 		var is_contact_down = false
 
@@ -99,8 +99,12 @@ func _physics_process(delta: float) -> void:
 
 		# if there is no contact then remove from all groups
 		if not is_contact_up and not is_contact_down:
-			for group in get_groups():
-				remove_from_group(group)
+			self.remove_from_groups()
+	
+				
+func remove_from_groups():
+	for group in get_groups():
+		remove_from_group(group)
 
 
 func pickup() -> void:
@@ -142,3 +146,9 @@ func get_rect() -> Rect2:
 func _on_body_entered(body: Node) -> void:
 	if not held and (body as TileMapLayer) and not is_in_group("level0"):
 		self.touched_ground.emit()
+		
+		# clean the brick
+		self.remove_from_groups()
+		self.explosion_animation.visible = true
+		self.sprite.visible = false
+		self.explosion_animation.play()
