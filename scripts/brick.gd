@@ -9,8 +9,8 @@ signal dropped
 signal touched_ground
 
 
-const MAX_VELOCITY: float = 50.0
-const MAX_APPLIED_FORCE: float = 250.0
+const MAX_VELOCITY: float = 25.0
+const MAX_APPLIED_FORCE: float = 100.0
 var previous_velocity: Vector2 = Vector2.ZERO
 var sound_played = false
 var held = false
@@ -99,8 +99,12 @@ func _physics_process(delta: float) -> void:
 
 		# if there is no contact then remove from all groups
 		if not is_contact_up and not is_contact_down:
-			for group in get_groups():
-				remove_from_group(group)
+			self.remove_from_groups()
+	
+				
+func remove_from_groups():
+	for group in get_groups():
+		remove_from_group(group)
 
 
 func pickup() -> void:
@@ -142,3 +146,9 @@ func get_rect() -> Rect2:
 func _on_body_entered(body: Node) -> void:
 	if not held and (body as TileMapLayer) and not is_in_group("level0"):
 		self.touched_ground.emit()
+		
+		# clean the brick
+		self.remove_from_groups()
+		self.explosion_animation.visible = true
+		self.sprite.visible = false
+		self.explosion_animation.play()
