@@ -56,7 +56,7 @@ func _ready() -> void:
 	"""
 	Called when scene has been added to the tree.
 	"""
-	self.play_music("res://assets/sounds/menu song mdj.mp3")
+	self.play_music("res://assets/sounds/menu song mdj.mp3", true)
 
 	# connect start and exit buttons
 	self.hud.buttons_controls.start_game.connect(self._on_buttons_controls_start_game)
@@ -92,7 +92,7 @@ func _on_buttons_controls_start_game(nb_stacks_settings: int, nb_players_setting
 	self.hud.information_screen.reset_players_score()
 	self.hud.information_screen.set_player(0)
 
-	self.play_music("res://assets/sounds/mdj gameplay.mp3")
+	self.play_music("res://assets/sounds/mdj gameplay.mp3", true)
 
 
 func _on_buttons_controls_exit_game() -> void:
@@ -111,10 +111,10 @@ func _on_level_game_over() -> void:
 	self.hud.show_end_screen(winner_player.sprite.animation)
 	self.level.remove_players()
 	Input.set_custom_mouse_cursor(null)
-	self.play_music("res://assets/sounds/Victory and ending song.mp3")
+	self.play_music("res://assets/sounds/Victory and ending song.mp3", false, -6)
 
 
-func play_music(sound_path: String):
+func play_music(sound_path: String, loop=false, volume=0):
 	"""
 	Change the current music playing.
 	"""
@@ -126,6 +126,8 @@ func play_music(sound_path: String):
 
 	self.music_player.stream = load(sound_path)
 	self.music_player.play()
+	self.music_player.stream.loop = loop
+	self.music_player.volume_db = volume
 
 
 func connect_brick_dropped() -> void:
