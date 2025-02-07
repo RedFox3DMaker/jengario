@@ -37,11 +37,13 @@ func _set_current_player(index: int) -> void:
 	Switch current player turn and change mouse cursors.
 	"""
 	self.current_player = wrapi(index, 0, self.nb_players)
-	Input.set_custom_mouse_cursor(self.mouse_cursor[self.current_player], Input.CURSOR_ARROW, self.mouse_cursor_hotspot[self.current_player])
 	self.hud.information_screen.set_player(self.current_player)
+	Input.set_custom_mouse_cursor(self.mouse_cursor[self.current_player], Input.CURSOR_ARROW, self.mouse_cursor_hotspot[self.current_player])
 
 
 func _input(event: InputEvent) -> void:
+	# do not change cursor when button controls is shown
+	if self.hud.buttons_controls.visible: return
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		if event.pressed:
 			Input.set_custom_mouse_cursor(self.mouse_cursor_drag[self.current_player], Input.CURSOR_ARROW, self.mouse_cursor_hotspot[self.current_player])
