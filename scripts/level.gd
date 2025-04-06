@@ -31,7 +31,7 @@ var mouse_cursor_drag: Array[Resource] = [
 	load("res://assets/ux/cursor_drag_4.png")
 	]
 var mouse_cursor_hotspot: Array[Vector2] = [
-	Vector2(15,8),
+	Vector2(10,40),
 	Vector2(19,9),
 	Vector2(34,42),
 	Vector2(14,4),
