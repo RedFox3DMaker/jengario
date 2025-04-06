@@ -1,12 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://vv1rkm5i2mhv"]
+[gd_scene load_steps=7 format=3 uid="uid://vv1rkm5i2mhv"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_0ikc8"]
 [ext_resource type="SpriteFrames" uid="uid://bu60ol1f463if" path="res://assets/sprites/playerAnim.tres" id="2_sw8q8"]
 [ext_resource type="FontFile" uid="uid://b4qtwint4cvqk" path="res://assets/fonts/TmonMonsori.ttf.ttf" id="2_temqy"]
 [ext_resource type="Texture2D" uid="uid://b56fwxs6ngee4" path="res://assets/sprites/player_icons.png" id="6_e6t3u"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_lxpu4"]
-size = Vector2(43, 50)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_la6fb"]
 resource_local_to_scene = true
@@ -17,18 +14,16 @@ region = Rect2(0, 0, 292, 248)
 resource_local_to_scene = true
 font = ExtResource("2_temqy")
 font_color = Color(1, 0.286275, 0.27451, 1)
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
 
-[node name="Player" type="Area2D"]
+[node name="Player" type="Node2D"]
 script = ExtResource("1_0ikc8")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.5, 0.5)
 sprite_frames = ExtResource("2_sw8q8")
-animation = &"Boy"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-1.5, 2)
-shape = SubResource("RectangleShape2D_lxpu4")
+animation = &"Zombie"
 
 [node name="PlayerIndicator" type="TextureRect" parent="."]
 offset_left = -7.0
@@ -46,5 +41,3 @@ offset_bottom = -41.0
 text = "1P"
 label_settings = SubResource("LabelSettings_5xlwo")
 horizontal_alignment = 1
-
-[connection signal="body_entered" from="." to="." method="_on_body_entered"]

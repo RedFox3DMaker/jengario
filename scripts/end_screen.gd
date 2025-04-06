@@ -1,8 +1,9 @@
+class_name EndScreen
 extends Control
 
-
-class_name EndScreen
-
+## EndScreen script
+## 
+## Show the winner and the loosers and propose to restart the game.
 
 @onready var confetti: GPUParticles2D = $ConfettiParticles
 @onready var rain: GPUParticles2D = $RainParticles
@@ -12,6 +13,7 @@ class_name EndScreen
 	$"LooserPlayer2",
 	$"LooserPlayer3"
 ]
+
 
 func start_animations() -> void:
 	confetti.emitting = true
@@ -27,7 +29,7 @@ func set_winner(winner: StringName, nb_players: int) -> void:
 	var loosers: Array[StringName] = [&"Boy", &"Zombie", &"Girl", &"Monster"]
 	loosers.erase(winner)
 
-	self.winner_player.animation = winner
+	winner_player.animation = winner
 
 	for index in range(len(loosers)):
 		var looser_anim = loosers[index]

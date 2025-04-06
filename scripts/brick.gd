@@ -1,105 +1,92 @@
 class_name Brick
-
-
 extends RigidBody2D
 
+## Brick script
+## 
+## Manage the brick physics behavior
 
 signal clicked
-signal dropped
+signal dropped(is_in_tower: bool)
 signal touched_ground
 
+@export var variant: BrickVariantType
 
+enum BrickVariantType { SQUARE_DOT, SQUARE, RECTANGLE }
 const MAX_VELOCITY: float = 50.0
 const MAX_APPLIED_FORCE: float = 250.0
 var previous_velocity: Vector2 = Vector2.ZERO
 var sound_played = false
 var held = false
-
-
-@onready var explosion_animation: AnimatedSprite2D = $ExplosionAnimation
-@onready var sprite: Sprite2D = $Sprite2D
-@onready var collision_shape: CollisionShape2D = $CollisionShape2D
-
-
-enum BrickVariantType { SQUARE_DOT, SQUARE, RECTANGLE }
-@export var variant: BrickVariantType
-
-
-class BrickVariant:
-	var region: Vector2
-	var size: Vector2
-
-	func init(i_region: Vector2, i_size: Vector2) -> BrickVariant:
-		self.region = i_region
-		self.size = i_size
-		return self
-
-
 var variant_dict = {
 	BrickVariantType.SQUARE_DOT: BrickVariant.new().init(Vector2(9, 13), Vector2(47,46)),
 	BrickVariantType.SQUARE: BrickVariant.new().init(Vector2(68,13), Vector2(47,46)),
 	BrickVariantType.RECTANGLE: BrickVariant.new().init(Vector2(9,61), Vector2(139,40)),
 }
 
+@onready var explosion_animation: AnimatedSprite2D = $ExplosionAnimation
+@onready var sprite: Sprite2D = $Sprite2D
+@onready var collision_shape: CollisionShape2D = $CollisionShape2D
+
+
 func _ready() -> void:
-	self.freeze = true
-	var brick_variant = self.variant_dict[variant]
-	self.sprite.region_rect = Rect2(brick_variant.region, brick_variant.size)
-	self.collision_shape.shape.size = brick_variant.size
-	if self.variant == BrickVariantType.RECTANGLE:
-		self.explosion_animation.animation = &"rectangle_explosion"
+	freeze = true
+	var brick_variant = variant_dict[variant]
+	sprite.region_rect = Rect2(brick_variant.region, brick_variant.size)
+	collision_shape.shape.size = brick_variant.size
+	if variant == BrickVariantType.RECTANGLE:
+		explosion_animation.animation = &"rectangle_explosion"
 	else:
-		self.explosion_animation.animation = &"square_explosion"
+		explosion_animation.animation = &"square_explosion"
 
 
 func _input_event(_viewport: Viewport, event: InputEvent, _shape_idx: int) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		if event.pressed:
 			AudioManager.play("res://assets/sounds/click sfx.mp3")
-			self.clicked.emit(self)
+			clicked.emit(self)
 
 
 func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
-	if self.held:
+	if held:
 		# normalize the direction of the mouse pointer
 		# and compute velocity to apply force
 		var motion = get_global_mouse_position() - global_transform.origin
 		var delta = state.step;
 		var velocity = motion / state.step
 		var velocity_norm = 0.01 * velocity.length()
-		if velocity_norm >= self.MAX_VELOCITY:
-			velocity *= self.MAX_VELOCITY / velocity_norm
+		if velocity_norm >= MAX_VELOCITY:
+			velocity *= MAX_VELOCITY / velocity_norm
 
 		var applied_force = mass * (velocity - previous_velocity) / delta
-		self.previous_velocity = velocity
+		previous_velocity = velocity
 		var applied_force_norm = applied_force.length()
-		if applied_force_norm >= self.MAX_APPLIED_FORCE:
-			applied_force *= self.MAX_APPLIED_FORCE / applied_force_norm
+		if applied_force_norm >= MAX_APPLIED_FORCE:
+			applied_force *= MAX_APPLIED_FORCE / applied_force_norm
 		state.apply_force(applied_force)
 
-		if not self.sound_played:
+		if not sound_played:
 			AudioManager.play("res://assets/sounds/dragging stone sound eff.mp3")
-			self.sound_played = true
+			sound_played = true
 
 
 func _physics_process(delta: float) -> void:
-	if not is_in_group("bricks") and not self.held:
-		self.explosion_animation.visible = true
-		self.sprite.visible = false
-		self.explosion_animation.play()
-	elif self.held:
+	if not is_in_group("bricks") and not held:
+		explosion_animation.visible = true
+		sprite.visible = false
+		explosion_animation.play()
+	elif held:
 		# check if there is a brick above...
 		const TEST_SPEED = 250
-		var is_contact_up = self.test_move(self.transform, Vector2.UP * delta * TEST_SPEED)
+		var is_contact_up = test_move(transform, Vector2.UP * delta * TEST_SPEED)
 		var is_contact_down = false
 
 		# ... or below, except on the floor
 		if not is_in_group("level0"):
-			is_contact_down = self.test_move(self.transform, Vector2.DOWN * delta * TEST_SPEED)
+			is_contact_down = test_move(transform, Vector2.DOWN * delta * TEST_SPEED)
 
 		# if there is no contact then remove from all groups
 		if not is_contact_up and not is_contact_down:
-			self.remove_from_groups()
+			remove_from_groups()
 	
 				
 func remove_from_groups():
@@ -108,33 +95,30 @@ func remove_from_groups():
 
 
 func pickup() -> void:
-	if self.held:
+	if held:
 		return
-	self.sleeping = false
-	self.held = true
+	sleeping = false
+	held = true
 	#previous_velocity_y = 0.0
-	self.lock_rotation = true
-	self.gravity_scale = 0
+	lock_rotation = true
+	gravity_scale = 0
 
 
 func drop(impulse: Vector2 = Vector2.ZERO) -> void:
-	if self.held:
-		self.apply_central_impulse(impulse)
-		self.previous_velocity = Vector2.ZERO
-		self.held = false
-		self.lock_rotation = false
-		self.gravity_scale = 1
-		self.dropped.emit()
+	if held:
+		apply_central_impulse(impulse)
+		previous_velocity = Vector2.ZERO
+		held = false
+		lock_rotation = false
+		gravity_scale = 1
+		# check if brick is still the tower
+		dropped.emit(is_in_group("bricks"))
 	else:
-		self.sound_played = false
-
-
-func _on_explosion_animation_animation_finished() -> void:
-	queue_free()
+		sound_played = false
 
 
 func get_size() -> Vector2:
-	return self.collision_shape.shape.size
+	return collision_shape.shape.size
 
 
 func get_rect() -> Rect2:
@@ -143,12 +127,26 @@ func get_rect() -> Rect2:
 	return global_rect
 
 
+func _on_explosion_animation_animation_finished() -> void:
+	queue_free()
+
+
 func _on_body_entered(body: Node) -> void:
 	if not held and (body as TileMapLayer) and not is_in_group("level0"):
-		self.touched_ground.emit()
+		touched_ground.emit()
 		
 		# clean the brick
-		self.remove_from_groups()
-		self.explosion_animation.visible = true
-		self.sprite.visible = false
-		self.explosion_animation.play()
+		remove_from_groups()
+		explosion_animation.visible = true
+		sprite.visible = false
+		explosion_animation.play()
+
+
+class BrickVariant:
+	var region: Vector2
+	var size: Vector2
+
+	func init(i_region: Vector2, i_size: Vector2) -> BrickVariant:
+		region = i_region
+		size = i_size
+		return self

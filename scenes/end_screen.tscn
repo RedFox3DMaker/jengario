@@ -32,54 +32,78 @@ grow_vertical = 2
 script = ExtResource("1_x0egx")
 
 [node name="Background" type="ColorRect" parent="."]
-layout_mode = 0
-offset_right = 1152.0
-offset_bottom = 648.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 color = Color(0, 0, 0, 0.396078)
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
-layout_mode = 0
-offset_right = 928.0
-offset_bottom = 120.0
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 170.0
+grow_horizontal = 2
 theme_override_constants/margin_left = 110
 theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 110
+theme_override_constants/margin_bottom = 50
 
-[node name="Banners" type="HBoxContainer" parent="MarginContainer"]
+[node name="RootContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
+
+[node name="Banners" type="HBoxContainer" parent="MarginContainer/RootContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
 theme_override_constants/separation = 150
-alignment = 1
 
-[node name="VictoryBanner" type="TextureRect" parent="MarginContainer/Banners"]
+[node name="VictoryBanner" type="TextureRect" parent="MarginContainer/RootContainer/Banners"]
+custom_minimum_size = Vector2(400, 120)
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
 texture = SubResource("AtlasTexture_evw77")
 
-[node name="Label" type="Label" parent="MarginContainer/Banners/VictoryBanner"]
+[node name="Label" type="Label" parent="MarginContainer/RootContainer/Banners/VictoryBanner"]
 layout_mode = 1
-anchors_preset = 5
+anchors_preset = 8
 anchor_left = 0.5
+anchor_top = 0.5
 anchor_right = 0.5
-offset_left = -116.0
-offset_right = 116.0
-offset_bottom = 90.0
+anchor_bottom = 0.5
+offset_left = -83.0
+offset_top = -50.0
+offset_right = 83.0
+offset_bottom = 14.0
 grow_horizontal = 2
+grow_vertical = 2
 text = "Victory"
 label_settings = ExtResource("4_qnv7k")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="DefeatBanner" type="TextureRect" parent="MarginContainer/Banners"]
+[node name="DefeatBanner" type="TextureRect" parent="MarginContainer/RootContainer/Banners"]
+custom_minimum_size = Vector2(400, 120)
 layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
 texture = SubResource("AtlasTexture_rjv6m")
 
-[node name="Label" type="Label" parent="MarginContainer/Banners/DefeatBanner"]
+[node name="Label" type="Label" parent="MarginContainer/RootContainer/Banners/DefeatBanner"]
 layout_mode = 1
-anchors_preset = 5
+anchors_preset = 8
 anchor_left = 0.5
+anchor_top = 0.5
 anchor_right = 0.5
-offset_left = -88.5
-offset_right = 88.5
-offset_bottom = 90.0
+anchor_bottom = 0.5
+offset_left = -71.5
+offset_top = -50.0
+offset_right = 71.5
+offset_bottom = 14.0
 grow_horizontal = 2
+grow_vertical = 2
 text = " Defeat"
 label_settings = ExtResource("4_qnv7k")
 horizontal_alignment = 1
@@ -108,24 +132,24 @@ randomness = 0.36
 visibility_rect = Rect2(-288, 0, 576, 648)
 
 [node name="WinnerPlayer" type="AnimatedSprite2D" parent="."]
-position = Vector2(320, 328)
+position = Vector2(304, 360)
 sprite_frames = ExtResource("3_3e11n")
 animation = &"Boy"
 
 [node name="LooserPlayer1" type="AnimatedSprite2D" parent="."]
-position = Vector2(720, 328)
+position = Vector2(760, 360)
 sprite_frames = ExtResource("3_3e11n")
 animation = &"Girl"
 flip_h = true
 
 [node name="LooserPlayer2" type="AnimatedSprite2D" parent="."]
-position = Vector2(840, 320)
+position = Vector2(864, 360)
 sprite_frames = ExtResource("3_3e11n")
 animation = &"Monster"
 flip_h = true
 
 [node name="LooserPlayer3" type="AnimatedSprite2D" parent="."]
-position = Vector2(952, 326)
+position = Vector2(984, 360)
 sprite_frames = ExtResource("3_3e11n")
 animation = &"Zombie"
 flip_h = true

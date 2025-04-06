@@ -1,7 +1,9 @@
+class_name InformationScreen
 extends Control
 
-class_name InformationScreen
-
+## InformationScreen script
+## 
+## Show/update the players scores.
 
 @onready var players_label: Array[Label] = [
 	$MarginContainer/PlayersInfo/PlayerInfoItem1/PlayerLabel,

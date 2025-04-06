@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://xn7rklcn0ehf"]
+[gd_scene load_steps=6 format=3 uid="uid://xn7rklcn0ehf"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_5v4ly"]
 [ext_resource type="PackedScene" uid="uid://dbhae44gmn1qh" path="res://scenes/level.tscn" id="3_q73ux"]
-[ext_resource type="PackedScene" uid="uid://bm3oldggrccl6" path="res://scenes/hud.tscn" id="7_uovd3"]
+[ext_resource type="PackedScene" uid="uid://roiim6gaiwag" path="res://scenes/buttons_controls.tscn" id="4_uwajb"]
+[ext_resource type="PackedScene" uid="uid://bm3oldggrccl6" path="res://scenes/screens.tscn" id="7_uovd3"]
 
 [sub_resource type="AudioStreamMP3" id="AudioStreamMP3_042lt"]
 loop = true
@@ -11,13 +12,28 @@ loop = true
 script = ExtResource("1_5v4ly")
 level_scene = ExtResource("3_q73ux")
 
-[node name="Level" parent="." instance=ExtResource("3_q73ux")]
+[node name="Screens" parent="." instance=ExtResource("7_uovd3")]
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_right = 1152.0
+offset_bottom = 648.0
+grow_horizontal = 1
+grow_vertical = 1
+mouse_filter = 1
 
-[node name="HUD" parent="." instance=ExtResource("7_uovd3")]
-size_flags_horizontal = 4
-size_flags_vertical = 4
+[node name="ButtonsControls" parent="." instance=ExtResource("4_uwajb")]
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_right = 1152.0
+offset_bottom = 648.0
+grow_horizontal = 1
+grow_vertical = 1
 
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamMP3_042lt")
+playback_type = 1
 
-[connection signal="game_over" from="Level" to="." method="_on_level_game_over"]
+[connection signal="exit_game" from="ButtonsControls" to="." method="_on_buttons_controls_exit_game"]
+[connection signal="start_game" from="ButtonsControls" to="." method="_on_buttons_controls_start_game"]

@@ -1,8 +1,11 @@
+class_name Tower
 extends Node2D
 
+## Tower script.
+##
+## Manages the bricks instantiation, placement and collapsing detection. 
 
-class_name Tower
-
+@export var brick_scene: PackedScene
 
 var _brick_fallen_on_floor = false
 var held_brick: Brick = null
@@ -10,25 +13,27 @@ var nb_stacks: int = 6
 var _start_with_squares = true
 
 
-@export var brick_scene: PackedScene
+func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+		if is_instance_valid(held_brick) and !event.pressed:
+			held_brick.drop()
+			held_brick = null
 
 
+## Builds the tower. Create an alternation of square and rectangle blocks.
+## Holds them in stacks.
 func build(nb_stacks_required: int) -> void:
-	"""
-	Builds the tower. Create an alternation of square and rectangle blocks.
-	Holds them in stacks.
-	"""
-	self._brick_fallen_on_floor = false
-	self.nb_stacks = nb_stacks_required
+	_brick_fallen_on_floor = false
+	nb_stacks = nb_stacks_required
 	# remove old blocks
 	for old_brick: Brick in get_tree().get_nodes_in_group("bricks"):
 		old_brick.remove_from_group("brick")
 		old_brick.queue_free()
 
 	# create the new tower
-	var create_squares = self._start_with_squares
+	var create_squares = _start_with_squares
 	var elevation = Vector2.ZERO
-	for idx in range(self.nb_stacks):
+	for idx in range(nb_stacks):
 		if create_squares:
 			elevation = create_squares_level(idx, elevation)
 			create_squares = false
@@ -38,16 +43,17 @@ func build(nb_stacks_required: int) -> void:
 
 
 func connect_brick_callbacks(brick_node: Brick) -> void:
-	brick_node.clicked.connect(self._on_brick_clicked)
-	brick_node.touched_ground.connect(self._on_brick_touched_ground)
+	brick_node.clicked.connect(_on_brick_clicked)
+	brick_node.touched_ground.connect(_on_brick_touched_ground)
 
-# create a level with 3 square brick
-# return the new elevation of the tower
+
+## create a level with 3 square brick
+## return the new elevation of the tower
 func create_squares_level(level_index: int, elevation: Vector2) -> Vector2:
 	# instantiate the bricks
-	var brick_1: Brick = self.brick_scene.instantiate()
-	var brick_2: Brick = self.brick_scene.instantiate()
-	var brick_3: Brick = self.brick_scene.instantiate()
+	var brick_1: Brick = brick_scene.instantiate()
+	var brick_2: Brick = brick_scene.instantiate()
+	var brick_3: Brick = brick_scene.instantiate()
 
 	# choose the variants
 	brick_1.variant = Brick.BrickVariantType.SQUARE_DOT
@@ -55,16 +61,16 @@ func create_squares_level(level_index: int, elevation: Vector2) -> Vector2:
 	brick_3.variant = Brick.BrickVariantType.SQUARE_DOT
 
 	# append to the parent scene
-	self.get_parent().add_child(brick_1)
-	self.get_parent().add_child(brick_2)
-	self.get_parent().add_child(brick_3)
+	get_parent().add_child(brick_1)
+	get_parent().add_child(brick_2)
+	get_parent().add_child(brick_3)
 
 	# set the positions
 	var brick_1_size_x = brick_1.get_size().x
 	var brick_2_size_x = brick_2.get_size().x
-	brick_1.position = self.position + elevation
-	brick_2.position = self.position + elevation + Vector2.RIGHT * brick_1_size_x
-	brick_3.position = self.position + elevation + Vector2.RIGHT * (brick_1_size_x + brick_2_size_x)
+	brick_1.position = position + elevation
+	brick_2.position = position + elevation + Vector2.RIGHT * brick_1_size_x
+	brick_3.position = position + elevation + Vector2.RIGHT * (brick_1_size_x + brick_2_size_x)
 
 	# associate them to the group level
 	brick_1.add_to_group("level" + str(level_index))
@@ -79,20 +85,20 @@ func create_squares_level(level_index: int, elevation: Vector2) -> Vector2:
 	return elevation + Vector2.UP * brick_1.get_size().y
 
 
-# create a level with 1 rectangle brick
-# return the new elevation of the tower
+## create a level with 1 rectangle brick
+## return the new elevation of the tower
 func create_rectangle_level(level_index: int, elevation: Vector2) -> Vector2:
 	# instantiate the bricks
-	var brick_rect: Brick = self.brick_scene.instantiate()
+	var brick_rect: Brick = brick_scene.instantiate()
 
 	# choose the variants
 	brick_rect.variant = Brick.BrickVariantType.RECTANGLE
 
 	# append to the scene
-	self.get_parent().add_child(brick_rect)
+	get_parent().add_child(brick_rect)
 
 	# set the positions (add correction 1/3 of the brick length to be centered)
-	brick_rect.position = self.position + elevation + Vector2.RIGHT * brick_rect.get_size().x / 3
+	brick_rect.position = position + elevation + Vector2.RIGHT * brick_rect.get_size().x / 3
 
 	# associate them to the group level
 	brick_rect.add_to_group("level" + str(level_index))
@@ -101,24 +107,7 @@ func create_rectangle_level(level_index: int, elevation: Vector2) -> Vector2:
 	connect_brick_callbacks(brick_rect)
 
 	return elevation + Vector2.UP * brick_rect.get_size().y
-
-
-func _on_brick_clicked(brick: Brick) -> void:
-	if !held_brick:
-		brick.pickup()
-		held_brick = brick
-		
-		
-func _on_brick_touched_ground() -> void:
-	self._brick_fallen_on_floor = true
-
-
-func _unhandled_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
-		if is_instance_valid(self.held_brick) and !event.pressed:
-			self.held_brick.drop()
-			self.held_brick = null
-
+	
 
 func compute_tower_level_rect(level: int) -> Rect2:
 	var level_rect: Rect2 = Rect2()
@@ -134,16 +123,14 @@ func compute_tower_level_rect(level: int) -> Rect2:
 	return level_rect
 
 
+## Check the state of the tower.
+## Start top level, compute the bounding box center of the level
+## Get the level below, compute the x lowest and highest coordinates
+## of all the bouding boxes.
+## If the center x coordinate is not between them, the tower is collapsing
 func is_collasping() -> bool:
-	"""
-	Check the state of the tower.
-	Start top level, compute the bounding box center of the level
-	Get the level below, compute the x lowest and highest coordinates
-	of all the bouding boxes.
-	If the center x coordinate is not between them, the tower is collapsing
-	"""
 	# check first there is no brick on the floor
-	if self._brick_fallen_on_floor: return true
+	if _brick_fallen_on_floor: return true
 	
 	# compute if the tower is about to collapse
 	var collapsing = false
@@ -183,6 +170,11 @@ func is_collasping() -> bool:
 			break
 
 	return collapsing
+	
+
+func has_bricks() -> bool:
+	var bricks = get_tree().get_nodes_in_group("bricks")
+	return bricks.size() != 0
 
 
 func remove_bricks() -> void:
@@ -191,3 +183,13 @@ func remove_bricks() -> void:
 		for group in brick.get_groups():
 			brick.remove_from_group(group)
 		brick.queue_free()
+
+
+func _on_brick_clicked(brick: Brick) -> void:
+	if !held_brick:
+		brick.pickup()
+		held_brick = brick
+		
+		
+func _on_brick_touched_ground() -> void:
+	_brick_fallen_on_floor = true

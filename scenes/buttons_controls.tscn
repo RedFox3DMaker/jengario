@@ -1,15 +1,44 @@
-[gd_scene load_steps=4 format=3 uid="uid://roiim6gaiwag"]
+[gd_scene load_steps=6 format=3 uid="uid://roiim6gaiwag"]
 
 [ext_resource type="Script" path="res://scripts/buttons_controls.gd" id="1_42n8n"]
 [ext_resource type="FontFile" uid="uid://b4qtwint4cvqk" path="res://assets/fonts/TmonMonsori.ttf.ttf" id="1_hclg2"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6vm1t"]
+bg_color = Color(0.158472, 0.158472, 0.158472, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+expand_margin_left = 5.0
+expand_margin_top = 32.0
+expand_margin_right = 5.0
+expand_margin_bottom = 5.0
+
 [sub_resource type="Theme" id="Theme_drg18"]
 AcceptDialog/fonts/title_font = ExtResource("1_hclg2")
+AcceptDialog/styles/embedded_border = SubResource("StyleBoxFlat_6vm1t")
 Button/fonts/font = ExtResource("1_hclg2")
 Label/fonts/font = ExtResource("1_hclg2")
 SpinBox/fonts/font = ExtResource("1_hclg2")
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pjfto"]
+bg_color = Color(0.237539, 0.237539, 0.237539, 1)
+border_width_left = 8
+border_width_top = 8
+border_width_right = 8
+border_width_bottom = 8
+border_color = Color(0.156863, 0.156863, 0.156863, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+expand_margin_left = 5.0
+expand_margin_top = 5.0
+expand_margin_right = 5.0
+expand_margin_bottom = 5.0
+
 [node name="ButtonsControls" type="Control"]
+custom_minimum_size = Vector2(1152, 648)
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -19,15 +48,20 @@ grow_vertical = 2
 script = ExtResource("1_42n8n")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-theme_override_constants/margin_left = 475
-theme_override_constants/margin_top = 400
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_top = 350
 
 [node name="Buttons" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 theme_override_constants/separation = 20
+alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="StartButton" type="Button" parent="MarginContainer/Buttons"]
@@ -51,18 +85,23 @@ text = "EXIT"
 [node name="AcceptDialog" type="AcceptDialog" parent="."]
 auto_translate_mode = 1
 title = "Settings"
-initial_position = 1
+position = Vector2i(410, 430)
 size = Vector2i(325, 170)
 unresizable = true
 theme = SubResource("Theme_drg18")
+theme_override_styles/panel = SubResource("StyleBoxFlat_pjfto")
 
 [node name="Control" type="Control" parent="AcceptDialog"]
 layout_mode = 3
-anchors_preset = 0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 offset_left = 8.0
 offset_top = 8.0
-offset_right = 317.0
-offset_bottom = 123.0
+offset_right = -8.0
+offset_bottom = -47.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="GridContainer" type="GridContainer" parent="AcceptDialog/Control"]
 layout_mode = 1
