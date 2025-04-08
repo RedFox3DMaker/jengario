@@ -22,6 +22,10 @@ config/icon="res://icon.svg"
 
 AudioManager="*res://scripts/audio_manager.gd"
 
+[display]
+
+window/stretch/mode="viewport"
+
 [editor]
 
 movie_writer/movie_file="E:/Multimedia/Itch/jengario/demo.avi"

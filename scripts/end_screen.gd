@@ -5,8 +5,8 @@ extends Control
 ## 
 ## Show the winner and the loosers and propose to restart the game.
 
-@onready var confetti: GPUParticles2D = $ConfettiParticles
-@onready var rain: GPUParticles2D = $RainParticles
+@onready var confetti: CPUParticles2D = $ConfettiParticles
+@onready var rain: CPUParticles2D = $RainParticles
 @onready var winner_player: AnimatedSprite2D = $"WinnerPlayer"
 @onready var looser_players: Array[AnimatedSprite2D] = [
 	$"LooserPlayer1",

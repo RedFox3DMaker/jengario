@@ -10,6 +10,15 @@ var bus = "master"
 var available = [] # the available players
 var queue = [] # the queue of sounds to play
 
+@onready var sounds := {
+	"CLICK": load("res://assets/sounds/click sfx.mp3"),
+	"DRAG": load("res://assets/sounds/dragging stone sound eff.mp3"),
+	"MENU": load("res://assets/sounds/menu song mdj.mp3"),
+	"TOWER_FALL": load("res://assets/sounds/tower falling.mp3"),
+	"GAME": load("res://assets/sounds/mdj gameplay.mp3"),
+	"END": load("res://assets/sounds/Victory and ending song.mp3")
+}
+
 
 func _ready() -> void:
 	# create the pool of AudioStreamPlayers
@@ -25,13 +34,13 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	# play a queued sound if any players are available
 	if not queue.is_empty() and not available.is_empty():
-		available[0].stream = load(queue.pop_front())
+		available[0].stream = queue.pop_front()
 		available[0].play()
 		available.pop_front()
 
 
-func play(sound_path: String):
-	queue.append(sound_path)
+func play(sound_name: String):
+	queue.append(sounds[sound_name])
 	
 
 ## When finised playing a stream, make the player available again

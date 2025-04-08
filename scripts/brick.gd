@@ -42,7 +42,7 @@ func _ready() -> void:
 func _input_event(_viewport: Viewport, event: InputEvent, _shape_idx: int) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		if event.pressed:
-			AudioManager.play("res://assets/sounds/click sfx.mp3")
+			AudioManager.play("CLICK")
 			clicked.emit(self)
 
 
@@ -65,7 +65,7 @@ func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
 		state.apply_force(applied_force)
 
 		if not sound_played:
-			AudioManager.play("res://assets/sounds/dragging stone sound eff.mp3")
+			AudioManager.play("DRAG")
 			sound_played = true
 
 

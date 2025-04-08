@@ -70,7 +70,7 @@ func _physics_process(_delta: float) -> void:
 		if tower.is_collasping():
 			# play the tower fall sound
 			is_game_over = true
-			AudioManager.play("res://assets/sounds/tower falling.mp3")
+			AudioManager.play("TOWER_FALL")
 		elif not tower.has_bricks():
 			is_game_over = true
 
@@ -85,7 +85,9 @@ func _physics_process(_delta: float) -> void:
 
 ## Change cursor while left click is maintained
 func _input(event: InputEvent) -> void:
-	if is_game_over: return
+	if is_game_over: 
+		Input.set_custom_mouse_cursor(null)
+		return
 	
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		if event.pressed:
