@@ -1,4 +1,6 @@
+class_name StartScreen
 extends Control
 
-
-class_name StartScreen
+## StartScreen script
+##
+## Show the start/restart screen.

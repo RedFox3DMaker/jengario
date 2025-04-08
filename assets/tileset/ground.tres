@@ -5,12 +5,12 @@
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_52lcc"]
 resource_name = "ground"
 texture = ExtResource("1_tmri6")
-texture_region_size = Vector2i(96, 96)
+texture_region_size = Vector2i(64, 64)
 0:0/0 = 0
-0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-48, -48, 48, -48, 48, 48, -48, 48)
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
 
 [resource]
-tile_size = Vector2i(96, 96)
+tile_size = Vector2i(64, 64)
 uv_clipping = true
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_52lcc")

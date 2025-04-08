@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=4 uid="uid://dbhae44gmn1qh"]
+[gd_scene load_steps=7 format=4 uid="uid://dbhae44gmn1qh"]
 
 [ext_resource type="Script" path="res://scripts/level.gd" id="1_66p50"]
 [ext_resource type="Texture2D" uid="uid://mmaknu8xpkof" path="res://assets/ux/level_background.png" id="1_k4oli"]
 [ext_resource type="PackedScene" uid="uid://bxfn0binhwquf" path="res://scenes/tower.tscn" id="2_3vaul"]
 [ext_resource type="TileSet" uid="uid://cjusyh70223hq" path="res://assets/tileset/ground.tres" id="2_a7qj7"]
+[ext_resource type="PackedScene" uid="uid://ccc4m4pk8vr23" path="res://scenes/information_screen.tscn" id="6_hdodb"]
 [ext_resource type="PackedScene" uid="uid://vv1rkm5i2mhv" path="res://scenes/player.tscn" id="6_hjt0i"]
 
 [node name="Level" type="Node2D"]
@@ -14,25 +15,38 @@ player_scene = ExtResource("6_hjt0i")
 [node name="Background" type="TextureRect" parent="."]
 offset_right = 1152.0
 offset_bottom = 648.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
 texture = ExtResource("1_k4oli")
+expand_mode = 2
 
 [node name="GroundTileMapLayer" type="TileMapLayer" parent="Background"]
-tile_map_data = PackedByteArray("AAAAAAYAAAAAAAAAAAABAAYAAAAAAAAAAAACAAYAAAAAAAAAAAADAAYAAAAAAAAAAAAEAAYAAAAAAAAAAAAFAAYAAAAAAAAAAAALAAYAAAAAAAAAAAAGAAYAAAAAAAAAAAAHAAYAAAAAAAAAAAAIAAYAAAAAAAAAAAAJAAYAAAAAAAAAAAAKAAYAAAAAAAAAAAA=")
+tile_map_data = PackedByteArray("AAAAAAkAAAAAAAAAAAABAAkAAAAAAAAAAAACAAkAAAAAAAAAAAADAAkAAAAAAAAAAAAEAAkAAAAAAAAAAAAFAAkAAAAAAAAAAAAGAAkAAAAAAAAAAAAHAAkAAAAAAAAAAAAIAAkAAAAAAAAAAAAJAAkAAAAAAAAAAAAKAAkAAAAAAAAAAAALAAkAAAAAAAAAAAAMAAkAAAAAAAAAAAANAAkAAAAAAAAAAAAOAAkAAAAAAAAAAAAPAAkAAAAAAAAAAAAQAAkAAAAAAAAAAAARAAkAAAAAAAAAAAAAAAoAAAAAAAAAADABAAoAAAAAAAAAADACAAoAAAAAAAAAADADAAoAAAAAAAAAADAEAAoAAAAAAAAAADAFAAoAAAAAAAAAADAGAAoAAAAAAAAAADAHAAoAAAAAAAAAADAIAAoAAAAAAAAAADAJAAoAAAAAAAAAADAOAAoAAAAAAAAAADAKAAoAAAAAAAAAADALAAoAAAAAAAAAADAMAAoAAAAAAAAAADANAAoAAAAAAAAAADAPAAoAAAAAAAAAADAQAAoAAAAAAAAAADARAAoAAAAAAAAAADA=")
 tile_set = ExtResource("2_a7qj7")
+
+[node name="InformationScreen" parent="." instance=ExtResource("6_hdodb")]
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_right = 1152.0
+offset_bottom = 648.0
+grow_horizontal = 1
+grow_vertical = 1
+mouse_filter = 2
 
 [node name="PlayersOrigins" type="CanvasGroup" parent="."]
 
 [node name="Player1Origin" type="Marker2D" parent="PlayersOrigins"]
-position = Vector2(343, 551)
+position = Vector2(320, 552)
 
 [node name="Player2Origin" type="Marker2D" parent="PlayersOrigins"]
-position = Vector2(742, 551)
+position = Vector2(832, 552)
 
 [node name="Player3Origin" type="Marker2D" parent="PlayersOrigins"]
-position = Vector2(181, 551)
+position = Vector2(192, 552)
 
 [node name="Player4Origin" type="Marker2D" parent="PlayersOrigins"]
-position = Vector2(905, 551)
+position = Vector2(960, 552)
 
 [node name="TowerOrigin" type="Marker2D" parent="."]
-position = Vector2(494, 552)
+position = Vector2(512, 552)

@@ -1,19 +1,17 @@
-extends Area2D
-
-
 class_name Player
+extends Node2D
 
+## Player script
+##
+## Responsible for sprite management and score update.
+
+@export var variant: PlayerVariantType
+
+enum PlayerVariantType { BOY, ZOMBIE, GIRL, MONSTER }
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var player_label: Label = $PlayerLabel
 @onready var player_indicator: TextureRect = $PlayerIndicator
-
-
-enum PlayerVariantType { BOY, ZOMBIE, GIRL, MONSTER }
-@export var variant: PlayerVariantType
-
-
-signal update_score(player: Player)
 
 
 # Called when the node enters the scene tree for the first time.
@@ -54,10 +52,3 @@ func _ready() -> void:
 
 	# start the animation
 	sprite.play()
-
-
-func _on_body_entered(body: Node2D) -> void:
-	var brick = body as Brick
-	if brick and brick.held:
-		brick.queue_free()
-		update_score.emit(self)

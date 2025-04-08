@@ -352,7 +352,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"Boy",
-"speed": 5.0
+"speed": 12.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -411,7 +411,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"Girl",
-"speed": 5.0
+"speed": 12.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -470,7 +470,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"Monster",
-"speed": 5.0
+"speed": 12.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -529,5 +529,5 @@ animations = [{
 }],
 "loop": true,
 "name": &"Zombie",
-"speed": 5.0
+"speed": 12.0
 }]
